@@ -1,0 +1,218 @@
+﻿@{
+    ViewData["title"] = "Index";
+    ViewData["Developer"] = "CourseDx Developers";
+    var courses = new[]
+    {
+        new {
+        coursetitle = "asp.net core mvc",
+        instructor = "Gamal Salah",
+        price = 1000,
+        discount = 25,
+        InstructorImg = "gamal.webp",
+        imgUrl = "c-4"
+        },
+        new {
+        coursetitle = "data analysis",
+        instructor = "Mohammed Assam",
+        price = 1500,
+        discount = 10,
+        InstructorImg = "Mohammed-Assam.webp",
+        imgUrl = "c-5"
+        },
+        new {
+        coursetitle = "Frontend",
+        instructor = "Elzero",
+        price = 500,
+        discount = 50,
+        InstructorImg = "elzero.webp",
+        imgUrl = "c-1"
+        }
+        };
+}
+
+<!-- Main Content -->
+<main class="pt-20 min-h-screen flex flex-col overflow-hidden relative ">
+    <!-- Background elements -->
+    <div id="Background-element" class="fixed top-0 left-0 w-full h-full opacity-20 z-10 pointer-events-none">
+     
+    </div>
+    <!-- Hero Section -->
+    <section class="min-h-screen w-full flex items-center justify-center p-6 md:p-12 relative z-10">
+        <div class="max-w-6xl w-full text-center">
+            <!-- Heading with typing animation -->
+            <h1 id="hero-heading" class="font-awesome tracking-wide text-gray-900 dark:text-gray-100 text-4xl md:text-5xl lg:text-6xl font-bold leading-tight inline-block">
+                Invest in your <span id="self-text" class="inline-block px-1 text-gray-700 dark:text-gray-300 transition-all duration-500">Self</span>
+            </h1>
+
+
+            <!-- Animated underline -->
+            <div class="relative mt-4 mx-auto">
+                <div id="animated-underline" class="h-1 bg-gradient-to-r from-yellow-400 to-yellow-600 transition-all duration-700 ease-out w-0 mx-auto w-fit"></div>
+            </div>
+
+            <!-- Paragraph -->
+            <p id="hero-paragraph" class="text-gray-700 dark:text-gray-400 mt-8 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed opacity-0 translate-y-4 transition-all duration-700">
+                We're here to help you become the best version of yourself.<br />The biggest decision is how much you want that version of you to be the real you.
+            </p>
+
+            <!-- Buttons -->
+            <div id="hero-buttons" class="flex flex-col md:flex-row gap-6 justify-center items-center mt-8 opacity-0 translate-y-4 transition-all duration-700 delay-200">
+                <div class="w-full md:w-auto">
+                    <a asp-controller="CourseDescovery" asp-action="Index" aria-label="Start Your Transformation" title="Make your future self proud of you"
+                       class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-gray-900 px-8 py-4 rounded-xl border-2 border-yellow-400/30 shadow-lg cursor-pointer hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 font-semibold w-full md:w-auto">
+                        Start Your Transformation
+                    </a>
+                </div>
+                <div class="text-center">
+                    <a asp-controller="CourseDescovery" asp-action="Index" title="Start your learning journey with our courses"
+                       aria-label="Explore our courses" class="text-gray-700 dark:text-gray-400 hover:text-yellow-500 dark:hover:text-yellow-400 transition-colors duration-300 font-medium text-lg flex items-center justify-center group">
+                        Explore Our Courses
+                        <i class="fas fa-arrow-right h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Salary Comparison Chart Section -->
+    <section class="w-full flex items-center justify-center p-6 md:p-12 relative z-10">
+        <div id="chart-container" class="max-w-4xl w-full">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">
+                    Salary <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-yellow-600 dark:from-yellow-300 dark:to-yellow-500">Comparison</span>
+                </h2>
+                <p class="text-gray-700 dark:text-gray-400 mt-2 text-base md:text-lg max-w-2xl mx-auto">
+                    The tech industry offers significantly higher earning potential compared to the national average.
+                    Investing in IT skills can dramatically boost your career prospects and financial future.
+                </p>
+            </div>
+
+            <div class="bg-gray-100 dark:bg-gray-800/40 backdrop-blur-sm border border-yellow-500/30 dark:border-yellow-500/20 rounded-xl p-3 md:p-6 shadow-xl relative">
+
+                <div class="absolute -inset-2 bg-yellow-500/10 dark:bg-yellow-500/10 rounded-xl filter blur-xl -z-10"></div>
+                <div id="chart" class="w-full h-64 md:h-80"></div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Top Courses Section -->
+    <section class="p-6 md:p-12 max-w-6xl w-full mt-12 mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100">
+                Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-yellow-600 dark:from-yellow-300 dark:to-yellow-500">Top Courses</span>
+            </h2>
+            <p class="text-gray-700 dark:text-gray-400 mt-4 text-lg max-w-3xl mx-auto">
+                Discover our most popular programs designed to accelerate your career growth and skill development
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @foreach (var course in courses)
+            {
+                var actualPrice = course.price; // discounted price
+                var oldPrice = Math.Round(actualPrice / (1 - (course.discount / 100.0)));
+                var discountText = $"{course.discount}% OFF";
+
+                <div class="flex flex-col justify-between bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-yellow-500/20 rounded-xl overflow-hidden transition-all duration-300 course-card">
+                    <div class="relative">
+                        @{
+                            string imgBase = course.imgUrl.Replace(" ", "%20");
+                        }
+                        <a asp-controller="Home"
+                               asp-action="Enrollment"
+                               asp-route-imgurl="@course.imgUrl"
+                               asp-route-title="@course.coursetitle"
+                               asp-route-instructor="@course.instructor"
+                               asp-route-oldprice="@oldPrice"
+                               asp-route-actualprice="@actualPrice">
+                        <img srcset="@(Url.Content($"~/img/400w/{imgBase}-400.webp")) 400w,
+                                     @(Url.Content($"~/img/800w/{imgBase}-800.webp")) 800w,
+                                     @(Url.Content($"~/img/1200w/{imgBase}-1200.webp")) 1200w"
+                             sizes="(max-width: 600px) 400px,
+                                    (max-width: 1024px) 800px,
+                                    1200px"
+                             src="@Url.Content($"~/img/{imgBase}")"
+                             alt="@course.coursetitle"
+                             loading="lazy"
+                                 fetchpriority="low"
+                             class="w-full h-48 object-cover transition-transform duration-300" />
+                        </a>
+                        <div class="absolute top-4 right-4 bg-yellow-500 text-gray-900 px-3 py-1 rounded-full text-sm font-bold">
+                            @discountText
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                               <a asp-controller="Home"
+                               asp-action="Enrollment"
+                               asp-route-imgurl="@course.imgUrl"
+                               asp-route-title="@course.coursetitle"
+                               asp-route-instructor="@course.instructor"
+                               asp-route-oldprice="@oldPrice"
+                               asp-route-actualprice="@actualPrice"
+                            class="text-xl font-bold text-gray-900 dark:text-gray-100 hover:text-yellow-600 dark:hover:text-yellow-400 transition-colors duration-300">
+                                @course.coursetitle
+                            </a>
+                            <div class="flex items-center bg-yellow-500/10 px-2 py-1 rounded">
+                                <i class="fas fa-star text-yellow-500 mr-1"></i>
+                                <span class="text-sm font-bold text-yellow-600 dark:text-yellow-500">4.9</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 dark:text-gray-400 mb-4 line-clamp-2">
+                            Master modern web technologies including React, Node.js, and cloud deployment strategies.
+                            Build scalable applications with industry-standard tools and methodologies.
+                        </p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex items-center">
+                                <img src="@Url.Content($"~/img/{course.InstructorImg}")"
+                                     alt="@course.instructor"
+                                     class="w-8 h-8 rounded-full mr-2"
+                                     loading="lazy"
+                                     fetchpriority="low" />
+                                
+                                        <a asp-controller="Home"
+                               asp-action="Enrollment"
+                               asp-route-imgurl="@course.imgUrl"
+                               asp-route-title="@course.coursetitle"
+                               asp-route-instructor="@course.instructor"
+                               asp-route-oldprice="@oldPrice"
+                               asp-route-actualprice="@actualPrice">
+                               <span class="text-sm text-gray-700 dark:text-gray-300 dark:hover:text-yellow-400">@course.instructor</span>
+                               </a>
+                            </div>
+                            <span class="text-gray-600 dark:text-gray-400 text-sm">12 Weeks</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-lg font-bold text-yellow-600 dark:text-yellow-500 line-through">$@oldPrice</span>
+                                <span class="text-xl font-bold text-yellow-600 dark:text-yellow-500 ml-2">$@actualPrice</span>
+                            </div>
+                            <a asp-controller="Home"
+                               asp-action="Enrollment"
+                               asp-route-imgurl="@course.imgUrl"
+                               asp-route-title="@course.coursetitle"
+                               asp-route-instructor="@course.instructor"
+                               asp-route-oldprice="@oldPrice"
+                               asp-route-actualprice="@actualPrice"
+                               class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-gray-900 px-4 py-2 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                                Enroll Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="text-center my-12">
+            <a asp-controller="CourseDescovery" asp-action="Index" class="cursor-pointer border-2 border-yellow-500/50 dark:border-yellow-500/30 text-yellow-600 dark:text-yellow-500 px-8 py-3 rounded-lg font-medium hover:bg-yellow-500 hover:text-gray-900 dark:hover:text-gray-900 transition-colors duration-300">
+                View All Courses
+            </a>
+        </div>
+    </section>
+</main>
+
+
+
+<script src="~/dist/Index.js" asp-append-version="true" ></script>

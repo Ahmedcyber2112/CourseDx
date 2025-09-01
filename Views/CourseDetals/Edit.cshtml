@@ -1,0 +1,252 @@
+﻿@model CourseDx.Entity.CourseDetals
+
+@{
+    ViewData["Title"] = "Update Course Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["FormValidation"] = true;
+}
+
+<section id="edit-course-container" class="max-w-3xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+
+        <!-- Header -->
+        <div class="border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50 px-6 py-5">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-800">Update Course Details</h3>
+                    <p class="text-sm text-gray-600 mt-1">Modify the course information below.</p>
+                </div>
+                <a asp-action="Index"
+                   class="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-xs hover:bg-gray-50 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-left">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M5 12l14 0" />
+                        <path d="M5 12l6 6" />
+                        <path d="M5 12l6 -6" />
+                    </svg>
+                    Back to List
+                </a>
+            </div>
+        </div>
+
+        <!-- Form Section -->
+        <form asp-action="Edit" method="post" class="px-6 py-6">
+            <input type="hidden" asp-for="id" />
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+                <!-- Title -->
+                <div class="sm:col-span-2">
+                    <label asp-for="Title" class="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-book">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />
+                            <path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />
+                            <path d="M3 6l0 13" />
+                            <path d="M12 6l0 13" />
+                            <path d="M21 6l0 13" />
+                        </svg>
+                        Course Title
+                    </label>
+                    <input asp-for="Title" autofocus
+                           class="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm shadow-xs focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition" />
+                    <span asp-validation-for="Title" class="mt-1 text-xs text-red-600 block"></span>
+                </div>
+
+                <!-- Description -->
+                <div class="sm:col-span-2">
+                    <label asp-for="Description" class="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-description">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                            <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                            <path d="M9 17h6" />
+                            <path d="M9 13h6" />
+                        </svg>
+                        Description
+                    </label>
+                    <textarea asp-for="Description" rows="3"
+                              class="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm shadow-xs focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition"></textarea>
+                    <span asp-validation-for="Description" class="mt-1 text-xs text-red-600 block"></span>
+                </div>
+
+                <!-- Date Range -->
+                <div>
+                    <label asp-for="From_Date" class="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-calendar">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+                            <path d="M16 3v4" />
+                            <path d="M8 3v4" />
+                            <path d="M4 11h16" />
+                            <path d="M11 15h1" />
+                            <path d="M11 19h1" />
+                        </svg>
+                        From Date
+                    </label>
+                    <input asp-for="From_Date" type="date"
+                           class="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm shadow-xs focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition" />
+                    <span asp-validation-for="From_Date" class="mt-1 text-xs text-red-600 block"></span>
+                </div>
+
+                <div>
+                    <label asp-for="To_Date" class="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+                            <path d="M16 3l-4 4l-4 -4" />
+                            <path d="M4 11l16 0" />
+                            <path d="M8 15h2v2h-2z" />
+                        </svg>
+                        To Date
+                    </label>
+                    <input asp-for="To_Date" type="date"
+                           class="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm shadow-xs focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition" />
+                    <span asp-validation-for="To_Date" class="mt-1 text-xs text-red-600 block"></span>
+                </div>
+
+                <!-- Time Range -->
+                <div>
+                    <label asp-for="From_Time" class="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-clock">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+                            <path d="M12 7v5l3 3" />
+                        </svg>
+                        From Time
+                    </label>
+                    <input asp-for="From_Time" type="time"
+                           class="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm shadow-xs focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition" />
+                    <span asp-validation-for="From_Time" class="mt-1 text-xs text-red-600 block"></span>
+                </div>
+
+                <div>
+                    <label asp-for="To_Time" class="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-clock-hour-3">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                            <path d="M12 12l3 2" />
+                            <path d="M12 7v5" />
+                        </svg>
+                        To Time
+                    </label>
+                    <input asp-for="To_Time" type="time"
+                           class="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm shadow-xs focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition" />
+                    <span asp-validation-for="To_Time" class="mt-1 text-xs text-red-600 block"></span>
+                </div>
+
+                <!-- Price -->
+                <div class="sm:col-span-2">
+                    <label  asp-for="Price" class="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-currency-dollar">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" />
+                            <path d="M12 3v3m0 12v3" />
+                        </svg>
+                        Price
+                    </label>
+                    <input type="number" id="price-input" asp-for="Price" min="0" step="50"
+                           class="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm shadow-xs focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition" />
+                    <span asp-validation-for="Price" class="mt-1 text-xs text-red-600 block"></span>
+                </div>
+
+                <!-- Instructor & Course Dropdowns -->
+                <div>
+                    <label asp-for="InstractorId" class="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-user-check">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                            <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+                            <path d="M15 19l2 2l4 -4" />
+                        </svg>
+                        Instructor
+                    </label>
+                    <select asp-for="InstractorId" asp-items="@(ViewBag.InstractorId as SelectList)"
+                            class="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm shadow-xs focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition">
+                        <option value="">-- Select Instructor --</option>
+                    </select>
+                    <span asp-validation-for="InstractorId" class="mt-1 text-xs text-red-600 block"></span>
+                </div>
+
+                <div>
+                    <label asp-for="CourseId" class="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-book-2">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />
+                            <path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />
+                            <path d="M3 6l0 13" />
+                            <path d="M12 6l0 13" />
+                            <path d="M21 6l0 13" />
+                        </svg>
+                        Course
+                    </label>
+                    <select asp-for="CourseId" asp-items="@(ViewBag.CourseId as SelectList)"
+                            class="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm shadow-xs focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition">
+                        <option value="">-- Select Course --</option>
+                    </select>
+                    <span asp-validation-for="CourseId" class="mt-1 text-xs text-red-600 block"></span>
+                </div>  
+                <!-- Checkboxes -->
+                <div class="sm:col-span-2">
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <div class="flex items-center">
+                            <input asp-for="IsOn_line" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2" />
+                            <label asp-for="IsOn_line" class="no-select ml-2 block text-sm text-gray-700">Online Course</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input asp-for="IsPaid" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2" />
+                            <label asp-for="IsPaid" class="no-select ml-2 block text-sm text-gray-700">Paid Course</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="mt-8 flex justify-end">
+                <button type="submit"
+                    id="submit "
+                        class="rounded-lg cursor-pointer bg-gradient-to-r from-blue-600 to-indigo-700 px-6 py-2.5 text-sm font-medium text-white shadow-md hover:from-blue-700 hover:to-indigo-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200">
+                    Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const titleInput = document.getElementById('Title');
+            if (titleInput) {
+                titleInput.focus();
+            }
+                const priceInput = document.getElementById("price-input");
+        // Function to remove decimals
+        function removeDecimals() {
+            let value = parseFloat(priceInput.value);
+            if (!isNaN(value)) {
+                priceInput.value = Math.floor(value);
+            } else if (priceInput.value) {
+                // If it's not a valid number, remove decimal parts
+                priceInput.value = priceInput.value.split('.')[0];
+            }
+        }
+
+        // Remove decimals on page load
+        if (priceInput && priceInput.value) {
+            removeDecimals();
+        }
+
+        // Remove decimals when user changes the value
+        if (priceInput) {
+            priceInput.addEventListener("change", removeDecimals);
+            priceInput.addEventListener("blur", removeDecimals);
+        }
+        });
+
+    </script>
+}
+

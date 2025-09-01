@@ -1,0 +1,346 @@
+﻿@{
+    bool needsValidation = ViewData["FormValidation"] as bool? ?? false;
+    ViewData["username"] = @User.Identity.Name;
+    ViewData["email"] = "example@gmail.com";
+}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="~/css/select2.min.css" />
+    <link rel="stylesheet" href="~/css/dropzone.css" />
+    <link rel="stylesheet" href="~/css/flatpicker.css" />
+    <link rel="stylesheet" href="~/css/apexcharts.css">
+
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+
+    <link rel="stylesheet" href="~/css/admin.css">
+
+    <style>
+
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <script src="https://kit.fontawesome.com/579420f243.js" crossorigin="anonymous"></script>
+    <script src="~/dist/lib/jquery.js"></script>
+    <script src="~/dist/lib/alpinev3.js" defer></script>
+    <script src="~/dist/select2.min.js"></script>
+    <script src="~/dist/lib/flatpicker.js"></script>
+    <script src="~/dist/lib/apexcharts.js"></script>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="flex items-center gap-4">
+            <button id="mobile-menu-toggle" class="mobile-menu-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M4 6l16 0" />
+                    <path d="M4 12l16 0" />
+                    <path d="M4 18l16 0" />
+                </svg>
+            </button>
+
+            <div class="search-container relative group max-w-xs w-64">
+                <div class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                        <path d="M21 21l-6 -6" />
+                    </svg>
+                </div>
+                <select id="admin-search" class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none bg-white cursor-pointer">
+                    <option value="">Press Ctrl + K to search...</option>
+                </select>
+                <div class="absolute right-2 top-1/2 transform -translate-y-1/2 text-xs text-gray-500 bg-gray-100 rounded px-1.5 py-0.5 pointer-events-none opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity">
+                    Ctrl+K
+                </div>
+            </div>
+        </div>
+
+        <div class="user-menu">
+            <div class="flex items-center gap-2">
+                <button class="inline-flex items-center justify-center relative cursor-pointer text-center rounded-full w-10 h-10 overflow-hidden border border-gray-200 bg-green-500 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" aria-label="User menu">
+                    <span>@(ViewData["username"]?.ToString().Substring(0, 1).ToUpper())</span>
+                </button>
+                <span class="hidden sm:inline text-gray-700 font-medium">
+                    @ViewData["username"]
+                </span>
+            </div>
+
+            <form asp-controller="Account" asp-action="Logout" method="post" class="inline">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="cursor-pointer text-red-600 border border-red-600 rounded-lg px-3 py-2 hover:text-white hover:bg-red-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 text-sm flex items-center gap-1">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="hidden md:inline">Logout</span>
+                </button>
+            </form>
+        </div>
+    </header>
+
+    <!-- Mobile Overlay -->
+    <div id="overlay"></div>
+
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside id="sidebar">
+            <nav class="p-4">
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <!-- Dashboard -->
+                    <div class="nav-item active">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M4 4h6v8h-6z" />
+                            <path d="M4 16h6v4h-6z" />
+                            <path d="M14 4h6v4h-6z" />
+                            <path d="M14 12h6v8h-6z" />
+                        </svg>
+                        <a asp-controller="Admin" asp-action="AdminHome" class="font-medium">Dashboard</a>
+                    </div>
+
+                    <!-- Admin Pages Dropdown -->
+                    <div class="mt-6">
+                        <div class="nav-item dropdown-toggle" data-target="admin-dropdown">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z" />
+                                <path d="M3 10h18" />
+                                <path d="M10 3v18" />
+                            </svg>
+                            <span class="font-medium">Admin Pages</span>
+                            <svg class="dropdown-icon ml-auto" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M6 9l6 6l6 -6" />
+                            </svg>
+                        </div>
+
+                        <div id="admin-dropdown" class="dropdown-content pl-2 mt-1 space-y-1">
+                            <a asp-controller="Admin" asp-action="Index" class="nav-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                                    <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                    <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
+                                </svg>
+                                <span>Users</span>
+                            </a>
+                            <a asp-controller="Student" asp-action="Index" class="nav-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
+                                    <path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
+                                </svg>
+                                <span>Students</span>
+                            </a>
+                            <a asp-controller="Instractor" asp-action="Index" class="nav-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                    <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+                                    <path d="M15 19l2 2l4 -4" />
+                                </svg>
+                                <span>Instructors</span>
+                            </a>
+                            <a asp-controller="Courses" asp-action="Index" class="nav-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />
+                                    <path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />
+                                    <path d="M3 6l0 13" />
+                                    <path d="M12 6l0 13" />
+                                    <path d="M21 6l0 13" />
+                                </svg>
+                                <span>Courses</span>
+                            </a>
+                            <a asp-controller="CourseDetals" asp-action="Index" class="nav-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />
+                                    <path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />
+                                    <path d="M3 6l0 13" />
+                                    <path d="M12 6l0 13" />
+                                    <path d="M21 6l0 13" />
+                                </svg>
+                                <span>Courses Details</span>
+                            </a>
+                            <a asp-controller="Reports" asp-action="Search" class="nav-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                                    <path d="M9 17l0 -5" />
+                                    <path d="M12 17l0 -1" />
+                                    <path d="M15 17l0 -3" />
+                                </svg>
+                                <span>Reports</span>
+                            </a>
+                            <a asp-controller="CourseEnrollment" asp-action="Index" class="nav-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                    <path d="M16 19h6" />
+                                    <path d="M19 16v6" />
+                                    <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+                                </svg>
+                                <span>Course Enrollment</span>
+                            </a>
+                        </div>
+                    </div>
+                }
+
+                <!-- User Pages Dropdown -->
+                <div class="mt-6">
+                    <div class="nav-item dropdown-toggle" data-target="user-dropdown">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                            <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                        </svg>
+                        <span class="font-medium">User Pages</span>
+                        <svg class="dropdown-icon ml-auto" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M6 9l6 6l6 -6" />
+                        </svg>
+                    </div>
+
+                    <div id="user-dropdown" class="dropdown-content pl-2 mt-1 space-y-1">
+                        <a asp-controller="Home" asp-action="Index" class="nav-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+                                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                                <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                            </svg>
+                            <span>Home</span>
+                        </a>
+                        <a asp-controller="Account" asp-action="Signup" class="nav-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                <path d="M16 19h6" />
+                                <path d="M19 16v6" />
+                                <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+                            </svg>
+                            <span>Register</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6z" />
+                                <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+                                <path d="M8 11v-4a4 4 0 1 1 8 0v4" />
+                            </svg>
+                            <span>Forgot Password</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main content -->
+        <main>
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container mx-auto px-4">
+            <p class="text-sm text-gray-600"> CourseDx Developers</p>
+        </div>
+    </footer>
+
+    <script type="module" src="~/dist/AdminPage.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+
+            mobileMenuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+            });
+
+            overlay.addEventListener('click', function() {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+
+            // Dropdown toggles
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const dropdown = document.getElementById(targetId);
+                    const icon = this.querySelector('.dropdown-icon');
+
+                    dropdown.classList.toggle('open');
+                    icon.classList.toggle('open');
+                });
+            });
+
+            // Define your admin pages
+            const adminPages = [
+                { id: 'users', text: 'Users', url: '@Url.Action("Index", "Admin")' },
+                { id: 'students', text: 'Students', url: '@Url.Action("Index", "Student")' },
+                { id: 'instructors', text: 'Instructors', url: '@Url.Action("Index", "Instractor")' },
+                { id: 'courses', text: 'Courses', url: '@Url.Action("Index", "Courses")' },
+                { id: 'reports', text: 'Reports', url: '@Url.Action("Search", "Reports")' },
+                { id: 'enrollment', text: 'Course Enrollment', url: '@Url.Action("Index", "CourseEnrollment")' },
+                { id: 'dashboard', text: 'Dashboard', url: '@Url.Action("AdminHome", "Admin")' }
+            ];
+
+            // Initialize Select2 with search functionality
+            $('#admin-search').select2({
+                placeholder: "Press Ctrl + K to search...",
+                allowClear: true,
+                minimumInputLength: 0,
+                data: adminPages,
+                templateResult: function(data) {
+                    if (!data.id) return data.text;
+                    return $('<span><i class="fas fa-search mr-2 text-gray-400"></i>' + data.text + '</span>');
+                },
+                templateSelection: function(data) {
+                    return data.text || "Press Ctrl + K to search...";
+                },
+                matcher: function(params, data) {
+                    if ($.trim(params.term) === '') return data;
+                    if (typeof data.text === 'undefined') return null;
+                    if (data.text.toLowerCase().indexOf(params.term.toLowerCase()) > -1) return data;
+                    return null;
+                }
+            });
+
+            // Handle selection
+            $('#admin-search').on('select2:select', function(e) {
+                const selectedPage = e.params.data;
+                if (selectedPage.url) {
+                    window.location.href = selectedPage.url;
+                }
+            });
+
+            // Keyboard shortcut (Ctrl + K)
+            $(document).keydown(function(e) {
+                if (e.ctrlKey && e.key === 'k') {
+                    e.preventDefault();
+                    $('#admin-search').select2('open');
+                }
+            });
+        });
+    </script>
+
+    @if (needsValidation)
+    {
+        <script src="~/dist/FormValidation.js"></script>
+    }
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,83 @@
+# .gitignore for CourseDX (ASP.NET Core + Node)
+# Created after scanning the repository (CourseDx.csproj, package.json, wwwroot)
+
+# -------------------- IDEs / editors --------------------
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# -------------------- Build outputs --------------------
+/bin/
+/obj/
+**/bin/
+**/obj/
+/out/
+/publish/
+*/publish/
+
+# -------------------- NuGet --------------------
+packages/
+*.nupkg
+.nuget/
+project.lock.json
+project.fragment.lock.json
+
+# -------------------- Runtime / generated --------------------
+*.db
+*.bak
+*.log
+logs/
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+# -------------------- Node / frontend --------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+pnpm-lock.yaml
+
+# If your build step outputs to wwwroot/dist or generates responsive images, ignore them here
+# (note: these files may already be tracked — see instructions below to remove tracked copies)
+wwwroot/dist/
+wwwroot/img/*/800w/
+wwwroot/img/*/400w/
+
+# -------------------- Environment / secrets --------------------
+.env
+.env.*
+secrets.json
+*.secret
+appsettings.*.Local
+
+# -------------------- OS files --------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# -------------------- Editor backup / swap --------------------
+*~
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# -------------------- Binaries / artifacts --------------------
+*.exe
+*.dll
+*.pdb
+
+# -------------------- Misc --------------------
+*.log
+*.trace
+
+# If you want to keep some generated files tracked, add explicit negations. Example:
+# !wwwroot/dist/important-file.js

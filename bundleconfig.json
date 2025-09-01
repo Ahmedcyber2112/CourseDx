@@ -1,0 +1,14 @@
+[
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    "inputFiles": [
+      "wwwroot/css/*.css" // Adjust path/pattern as needed
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/site.min.js",
+    "inputFiles": [
+      "wwwroot/js/*.js" // Adjust path/pattern as needed, maybe exclude Index.js if it's page-specific
+    ]
+  }
+]

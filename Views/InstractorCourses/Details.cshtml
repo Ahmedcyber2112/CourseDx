@@ -1,0 +1,87 @@
+﻿@model CourseDx.Entity.InstractorCourses
+
+@{
+    ViewData["Title"] = "ASSIGNMENT DETAILS";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section id="assignment-details-container" class="max-w-3xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+
+        <!-- Header -->
+        <div class="border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50 px-6 py-5">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-800">Assignment Details</h3>
+                    <p class="text-sm text-gray-600 mt-1">View the details of the instructor-course assignment.</p>
+                </div>
+                <div class="flex gap-2">
+                    <a asp-action="Edit" asp-route-id="@Model?.Id"
+                       class="inline-flex items-center justify-center gap-2 rounded-lg border border-blue-500 bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-xs hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-pencil">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
+                            <path d="M13.5 6.5l4 4" />
+                        </svg>
+                        Edit
+                    </a>
+                    <a asp-action="Index"
+                       class="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-xs hover:bg-gray-50 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-left">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M5 12l14 0" />
+                            <path d="M5 12l6 6" />
+                            <path d="M5 12l6 -6" />
+                        </svg>
+                        Back to List
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Details Section -->
+        <div class="px-6 py-6">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+
+                <!-- Course ID -->
+                <div class="sm:col-span-1">
+                    <p class="text-sm font-medium text-gray-500 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-book-2">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />
+                            <path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />
+                            <path d="M3 6l0 13" />
+                            <path d="M12 6l0 13" />
+                            <path d="M21 6l0 13" />
+                        </svg>
+                        @Html.DisplayNameFor(model => model.CourseId):
+                    </p>
+                </div>
+                <div class="sm:col-span-2">
+                    <p class="text-sm text-gray-900">
+                        @Html.DisplayFor(model => model.CourseId)
+                    </p>
+                </div>
+
+                <!-- Instructor ID -->
+                <div class="sm:col-span-1">
+                    <p class="text-sm font-medium text-gray-500 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-user-check">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                            <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+                            <path d="M15 19l2 2l4 -4" />
+                        </svg>
+                        @Html.DisplayNameFor(model => model.InstractorId):
+                    </p>
+                </div>
+                <div class="sm:col-span-2">
+                    <p class="text-sm text-gray-900">
+                        @Html.DisplayFor(model => model.InstractorId)
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

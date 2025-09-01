@@ -1,0 +1,160 @@
+﻿@model CourseDx.Models.Admin.HomeStatisticsModel
+@using System.Text.Json;
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var courseEnrollmentJson = JsonSerializer.Serialize(Model.CourseEnrollmentData);
+}
+
+<div class="container mx-auto px-4 py-6">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">Admin Dashboard</h1>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-blue-500 rounded-lg shadow-md p-4 text-white">
+            <div class="text-2xl font-bold">@Model.StudentsCount</div>
+            <div class="text-xs mt-1">Total Students</div>
+        </div>
+        <div class="bg-green-500 rounded-lg shadow-md p-4 text-white">
+            <div class="text-2xl font-bold">@Model.EnrollmentsCount</div>
+            <div class="text-xs mt-1">Active Courses</div>
+        </div>
+        <div class="bg-yellow-500 rounded-lg shadow-md p-4 text-white">
+                <div class="text-2xl font-bold">@Model.TotalRevenue</div>
+            <div class="text-xs mt-1">Total Revenue</div>
+        </div>
+        <div class="bg-indigo-500 rounded-lg shadow-md p-4 text-white">
+            <div class="text-2xl font-bold">@Model.InstractorsCount</div>
+            <div class="text-xs mt-1">Instructor count</div>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-white rounded-lg shadow-md p-12">
+            <div class="flex items-center mb-4">
+                <i class="fas fa-chart-bar text-blue-500 mr-2"></i>
+                <h3 class="text-lg font-semibold text-gray-800">Course Enrollment</h3>
+            </div>
+            <div id="courseEnrollmentChart" class="h-80"></div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-12">
+            <div class="flex items-center mb-4">
+                <i class="fas fa-chart-line text-green-500 mr-2"></i>
+                <h3 class="text-lg font-semibold text-gray-800">Student Growth</h3>
+            </div>
+            <div id="studentGrowthChart" class="h-80"></div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-12">
+            <div class="flex items-center mb-4">
+                <i class="fas fa-chart-area text-purple-500 mr-2"></i>
+                <h3 class="text-lg font-semibold text-gray-800">Revenue vs Expenses</h3>
+            </div>
+            <div id="financialChart" class="h-80"></div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-12">
+            <div class="flex items-center mb-4">
+                <i class="fas fa-chart-pie text-red-500 mr-2"></i>
+                <h3 class="text-lg font-semibold text-gray-800">Course Categories</h3>
+            </div>
+            <div id="categoryChart" class="h-80"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Raw data from backend
+            const courseEnrollmentData = @Html.Raw(courseEnrollmentJson);
+
+            // Helper
+            function processChartData(data) {
+                const labels = data.map(d => d.Label);
+                const values = data.map(d => d.Value);
+                return { labels, values };
+            }
+
+            // Group Top N + Other
+            function prepareTopCategories(data, topN = 7) {
+                let sorted = [...data].sort((a, b) => b.Value - a.Value);
+                let top = sorted.slice(0, topN);
+                if (sorted.length > topN) {
+                    let otherSum = sorted.slice(topN).reduce((sum, d) => sum + d.Value, 0);
+                    top.push({ Label: "Other", Value: otherSum });
+                }
+                return processChartData(top);
+            }
+
+            // --- Category Pie Chart ---
+            const categoryData = prepareTopCategories(courseEnrollmentData, 7);
+            var categoryOptions = {
+                chart: { type: 'pie', height: '100%', toolbar: { show: false } },
+                series: categoryData.values,
+                labels: categoryData.labels,
+                colors: ['#3B82F6', '#10B981', '#EF4444', '#8B5CF6', '#F59E0B', '#06B6D4', '#84CC16', '#9CA3AF'],
+                legend: { position: 'bottom', fontSize: '12px', itemMargin: { horizontal: 10, vertical: 5 } },
+                responsive: [{ breakpoint: 480, options: { legend: { position: 'bottom' } } }],
+                dataLabels: {
+                    enabled: true,
+                    formatter: val => val.toFixed(1) + '%',
+                    style: { fontSize: '12px', fontWeight: 'bold' }
+                },
+                tooltip: { y: { formatter: val => val + ' students' } }
+            };
+            new ApexCharts(document.querySelector("#categoryChart"), categoryOptions).render();
+
+            // --- Course Enrollment Bar Chart ---
+            const courseEnrollments = processChartData(courseEnrollmentData);
+            var enrollmentOptions = {
+                chart: { type: 'bar', height: '100%', toolbar: { show: false } },
+                series: [{ name: 'Enrolled Students', data: courseEnrollments.values }],
+                xaxis: {
+                    categories: courseEnrollments.labels,
+                    labels: { trim: true, style: { fontSize: '11px' } }
+                },
+                colors: ['#10B981'],
+                plotOptions: { bar: { columnWidth: '50%', distributed: true } },
+                legend: { show: false },
+                dataLabels: { enabled: false },
+                tooltip: { y: { formatter: val => val + " students" } },
+                grid: { borderColor: '#e0e0e0', strokeDashArray: 2 },
+            };
+            new ApexCharts(document.querySelector("#courseEnrollmentChart"), enrollmentOptions).render();
+
+            // --- Student Growth Line Chart ---
+            var growthOptions = {
+                chart: { type: 'line', height: '100%', toolbar: { show: false } },
+                series: [{ name: 'Total Students', data: [120, 180, 240, 320, 450, 580, 720, 890, 1050, 1245] }],
+                xaxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'] },
+                colors: ['#10B981'],
+                stroke: { curve: 'smooth', width: 3 },
+                markers: { size: 4, hover: { size: 6 } },
+                grid: { borderColor: '#e0e0e0', strokeDashArray: 2 },
+                tooltip: { y: { formatter: val => val + " students" } }
+            };
+            new ApexCharts(document.querySelector("#studentGrowthChart"), growthOptions).render();
+
+            // --- Financial Mixed Chart ---
+            var financialOptions = {
+                chart: { type: 'line', height: '100%', toolbar: { show: false } },
+                series: [
+                    { name: 'Revenue', type: 'column', data: [12000, 18500, 22000, 28000, 35000, 42000] },
+                    { name: 'Expenses', type: 'line', data: [8000, 12000, 15000, 18000, 22000, 25000] }
+                ],
+                xaxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'] },
+                colors: ['#10B981', '#EF4444'],
+                stroke: { width: [0, 3] },
+                markers: { size: [0, 4], hover: { size: [0, 6] } },
+                grid: { borderColor: '#e0e0e0', strokeDashArray: 2 },
+                tooltip: { y: { formatter: val => '$' + val.toLocaleString() } }
+            };
+            new ApexCharts(document.querySelector("#financialChart"), financialOptions).render();
+        });
+    </script>
+}

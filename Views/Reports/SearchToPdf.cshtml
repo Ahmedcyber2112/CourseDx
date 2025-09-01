@@ -1,0 +1,87 @@
+﻿@model List<CourseDx.Entity.CourseDetals>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title> </title>
+    <meta charset="utf-8" />
+
+
+    <!-- Bootstrap CSS -->
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+     
+    <style>
+        table,
+        thead,
+        tr,
+        tbody,
+        th,
+        td {
+            text-align: center;
+            direction: rtl;
+        }
+
+        .table td {
+            text-align: center;
+            direction: rtl;
+        }
+
+        .table { 
+            margin-top: 30px;
+            font-family: blissregular, Arial;
+            direction: rtl;
+        }
+         
+        tr {
+            page-break-inside: avoid;
+        }
+    </style>
+
+
+</head>
+<body>
+    @if (Model != null)
+    {
+        <table border="1" class="table table-bordered jDataTable">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Title</th>
+                    <th>Instructor</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Price</th>
+                    <th>Online</th>
+                    <th>Paid</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Course?.Name</td>
+                        <td>@item.Title</td>
+                        <td>@item.Instractor?.Name</td>
+                        <td>@item.From_Date.ToShortDateString() - @item.To_Date.ToShortDateString()</td>
+                        <td>@item.From_Time.ToShortTimeString() - @item.To_Time.ToShortTimeString()</td>
+                        <td>@item.Price</td>
+                        <td>@(item.IsOn_line ? "Yes" : "No")</td>
+                        <td>@(item.IsPaid ? "Yes" : "No")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else if (Model == null)
+    {
+        <p>No results found.</p>
+    }
+
+
+
+</body>
+</html>

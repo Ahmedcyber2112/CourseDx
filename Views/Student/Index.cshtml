@@ -1,0 +1,83 @@
+﻿@model IEnumerable<CourseDx.Entity.Student>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Student";
+    ViewData["Controller"] = "Student";
+    ViewData["Action"] = "Delete";
+}
+
+<!-- Inject config into JS -->
+<script>
+    window.deleteConfig = {
+        controller: '@ViewData["Controller"]',
+        action: '@ViewData["Action"]'
+    };
+</script>
+
+<div class="admin-table-container">
+    <div class="flex justify-between px-2 mb-4">
+        <h1 class="admin-title">Student</h1>
+        <a class="create-new-btn" asp-action="Create">Create New</a>
+    </div>
+
+    <table class="table jDataTable">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Full_Name)</th>
+                <th>@Html.DisplayNameFor(model => model.adddress)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model)
+            {
+                <tr>
+                    <td>@student.Full_Name</td>
+                    <td>@student.adddress</td>
+                    <td class="flex justify-center gap-2">
+                        <a class="action-btn update-btn" asp-action="Edit" asp-route-id="@student.Id">Edit</a>
+                        <a href="#"
+                           class="action-btn delete-btn text-red-600"
+                           data-id="@student.Id"
+                           data-name="@student.Full_Name">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Cards for mobile view -->
+    <div class="user-cards">
+        @foreach (var student in Model)
+        {
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-label">Student</span>
+                    <span class="card-value">@student.Full_Name</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-item">
+                        <span class="card-label">Full Name:</span>
+                        <span class="card-value">@student.Full_Name</span>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-label">Address:</span>
+                        <span class="card-value">@student.adddress</span>
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <a asp-action="Edit" asp-route-id="@student.Id" class="card-btn card-btn-update">Edit</a>
+                    <a href="#" class="card-btn card-btn-delete ju"
+                       data-id="@student.Id"
+                       data-name="@student.Full_Name">
+                        Delete
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div> 
+<!-- Include the modal -->
+@Html.Partial("DeleteComfirm")

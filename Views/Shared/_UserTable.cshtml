@@ -1,0 +1,82 @@
+@model IEnumerable<AppUser>
+
+<div>
+	<div>
+		<div>
+			<h3>
+				All Users
+			</h3>
+		</div>
+
+		<div>
+			<a asp-action="Create" class="btn-create">
+				Create User
+			</a>
+		</div>
+	</div>
+
+	<div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>
+						<div>
+							<p>ID</p>
+						</div>
+					</th>
+					<th>
+						<div>
+							<p>Username</p>
+						</div>
+					</th>
+					<th>
+						<div>
+							<p>Email</p>
+						</div>
+					</th>
+					<th>
+						<div>
+							<p>Actions</p>
+						</div>
+					</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				@foreach (var user in Model)
+				{
+					<tr>
+						<td>
+							<div>
+								<p>@user.Id</p>
+							</div>
+						</td>
+						<td>
+							<div>
+								<p>@user.UserName</p>
+							</div>
+						</td>
+						<td>
+							<div>
+								<p>@user.Email</p>
+							</div>
+						</td>
+						<td>
+							<div>
+								<a asp-action="Update" asp-route-id="@user.Id" class="btn-update">Update</a>
+								<a href="#"
+								   data-user-id="@user.Id"
+								   data-user-name="@user.UserName"
+								   data-user-email="@user.Email"
+								   onclick="showDeleteModal(this); return false;"
+								   class="btn-delete">
+									Delete
+								</a>
+							</div>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>

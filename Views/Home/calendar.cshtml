@@ -1,0 +1,207 @@
+﻿@{
+    ViewData["title"] = "Calendar";
+    ViewData["Developer"] = "CourseDx Developers";
+}
+
+<!-- Main Content -->
+<main class="pt-20 min-h-screen flex flex-col overflow-hidden relative">
+    <!-- Background elements -->
+    <div class="fixed top-0 left-0 w-full h-full opacity-20 z-10 pointer-events-none">
+        <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-yellow-400 rounded-full filter blur-3xl animate-pulse-slow opacity-40"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500 rounded-full filter blur-3xl opacity-50 animate-pulse-slow delay-1000"></div>
+    </div>
+
+    <!-- Calendar Section -->
+    <section class="min-h-screen w-full flex items-center justify-center p-6 md:p-12 relative z-20">
+        <div class="max-w-4xl w-full">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-yellow-500/20 overflow-hidden relative">
+                <!-- Gradient top border -->
+                <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-400 to-purple-500"></div>
+
+                <div class="cal-header flex flex-wrap gap-4 md:gap-0 items-center justify-between p-5 md:p-6 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-yellow-400 to-purple-500 text-white">
+                    <div class="flex gap-2">
+                        <button id="prevBtn" class="bg-white/20 hover:bg-white/30 text-white p-2 rounded-lg transition-all duration-300" aria-label="Previous month">
+                            ◀
+                        </button>
+                        <button id="nextBtn" class="bg-white/20 hover:bg-white/30 text-white p-2 rounded-lg transition-all duration-300" aria-label="Next month">
+                            ▶
+                        </button>
+                        <button id="todayBtn" class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-4 py-2 rounded-lg font-semibold transition-all duration-300">
+                            Today
+                        </button>
+                    </div>
+
+                    <h2 id="title" class="text-xl md:text-2xl font-bold text-center flex-grow md:flex-grow-0">
+                        Month YYYY
+                    </h2>
+
+                    <div class="flex gap-2">
+                        <button id="langBtn" class="bg-purple-500/20 hover:bg-purple-500/30 text-white px-4 py-2 rounded-lg font-semibold transition-all duration-300" aria-label="Toggle language">
+                            العربية / EN
+                        </button>
+                        <button id="printBtn" class="bg-yellow-400/20 hover:bg-yellow-400/30 text-white p-2 rounded-lg transition-all duration-300" title="Print">
+                            🖨️
+                        </button>
+                    </div>
+                </div>
+
+                <div class="p-4 md:p-6">
+                    <div class="grid grid-cols-7 gap-1 mb-2" id="weekdays">
+                        <!-- Weekday headers will be populated by JS -->
+                    </div>
+                    <div class="grid grid-cols-7 gap-1" id="days">
+                        <!-- Calendar days will be populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+    (function(){
+      const state = {
+        date: new Date(),
+        lang: localStorage.getItem('cal_lang') || 'en',
+        events: JSON.parse(localStorage.getItem('cal_events')||'{}')
+      };
+
+      const i18n = {
+        en:{
+          months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+          weekdays: ['Sat', 'Sun','Mon','Tue','Wed','Thu','Fri'],
+          today:'Today', add:'Add', noEvents:'No events', prompt:'Add event for',
+          firstDay:6, dir:'ltr'
+        },
+        ar:{
+          months: ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'],
+          weekdays: ['السبت','الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة'],
+          today:'اليوم', add:'إضافة', noEvents:'لا أحداث', prompt:'إضافة حدث لـ',
+          firstDay:6, dir:'rtl'
+        }
+      };
+
+      const $ = sel => document.querySelector(sel);
+      const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+      const elTitle = $('#title');
+      const elWeekdays = $('#weekdays');
+      const elDays = $('#days');
+
+      $('#prevBtn').addEventListener('click',()=>{ changeMonth(-1); });
+      $('#nextBtn').addEventListener('click',()=>{ changeMonth(1); });
+      $('#todayBtn').addEventListener('click',()=>{ state.date = new Date(); render(); });
+      $('#langBtn').addEventListener('click',toggleLang);
+      $('#printBtn').addEventListener('click',()=>window.print());
+
+      function toggleLang(){
+        state.lang = state.lang==='en' ? 'ar' : 'en';
+        localStorage.setItem('cal_lang', state.lang);
+        render();
+      }
+
+      function changeMonth(delta){
+        state.date.setMonth(state.date.getMonth()+delta);
+        render();
+      }
+
+      function ymd(d){
+        const y = d.getFullYear();
+        const m = (d.getMonth()+1).toString().padStart(2,'0');
+        const day = d.getDate().toString().padStart(2,'0');
+        return `${y}-${m}-${day}`;
+      }
+
+      function render(){
+        const t = i18n[state.lang];
+        document.title = state.lang==='en' ? 'Calendar' : 'تقويم';
+        $('#todayBtn').textContent = t.today;
+        $('#langBtn').textContent = state.lang==='en' ? 'العربية / EN' : 'English / عربي';
+        document.querySelector('main').setAttribute('dir', t.dir);
+
+
+        const y = state.date.getFullYear();
+        const m = state.date.getMonth();
+        elTitle.textContent = `${t.months[m]} ${y}`;
+
+
+        elWeekdays.innerHTML = '';
+        t.weekdays.forEach(weekday => {
+          const w = document.createElement('div');
+          w.className = 'text-center text-sm font-semibold text-gray-500 dark:text-gray-400 py-2';
+          w.textContent = weekday;
+          elWeekdays.appendChild(w);
+        });
+
+
+        elDays.innerHTML = '';
+        const firstOfMonth = new Date(y, m, 1);
+        const lastOfMonth = new Date(y, m+1, 0);
+
+
+        const jsFirstDayIndex = firstOfMonth.getDay();
+        const offset = (jsFirstDayIndex - t.firstDay + 7) % 7;
+
+        const prevDays = offset;
+        const totalCells = Math.ceil((prevDays + lastOfMonth.getDate()) / 7) * 7;
+
+
+        const gridStart = new Date(firstOfMonth);
+        gridStart.setDate(firstOfMonth.getDate() - prevDays);
+
+        const today = new Date();
+        for(let i=0;i<totalCells;i++){
+          const d = new Date(gridStart);
+          d.setDate(gridStart.getDate()+i);
+
+          const cell = document.createElement('div');
+          cell.className = 'min-h-[100px] md:min-h-[120px] border border-gray-200 dark:border-gray-700 rounded-xl p-2 flex flex-col transition-all duration-200 hover:shadow-md hover:border-yellow-400 bg-gray-50 dark:bg-gray-800/50';
+
+          if(d.getMonth()!==m) {
+            cell.classList.add('opacity-40');
+          }
+
+          const isToday = d.toDateString()===today.toDateString();
+          if(isToday) {
+            cell.classList.add('bg-gradient-to-br', 'from-yellow-50', 'to-yellow-100', 'border-yellow-400', 'dark:from-yellow-900/30', 'dark:to-yellow-800/30');
+          }
+
+          const num = document.createElement('div');
+          num.className = `text-right font-bold ${isToday ? 'text-yellow-600 dark:text-yellow-400 text-lg' : 'text-gray-700 dark:text-gray-300'}`;
+          num.textContent = d.getDate();
+
+          const eventsWrap = document.createElement('div');
+          eventsWrap.className = 'flex flex-col gap-1 mt-1 flex-grow';
+
+          const key = ymd(d);
+          const items = state.events[key] || [];
+          if(items.length){
+            items.slice(0,3).forEach(ev=>{
+              const badge = document.createElement('div');
+              badge.className = 'flex items-center gap-2 text-xs p-2 rounded-lg bg-white dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600';
+              const dot = document.createElement('span');
+              dot.className = 'w-2 h-2 rounded-full bg-gradient-to-r from-yellow-400 to-purple-500';
+              badge.appendChild(dot);
+              const txt = document.createElement('span');
+              txt.className = 'text-gray-700 dark:text-gray-300 truncate';
+              txt.textContent = ev.text;
+              badge.appendChild(txt);
+              eventsWrap.appendChild(badge);
+            });
+            if(items.length>3){
+              const more = document.createElement('div');
+              more.className = 'text-xs p-2 rounded-lg bg-white dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-400';
+              more.innerHTML = `+${items.length-3} more`;
+              eventsWrap.appendChild(more);
+            }
+          }
+
+          cell.appendChild(num);
+          cell.appendChild(eventsWrap);
+          elDays.appendChild(cell);
+        }
+      }
+
+      render();
+    })();
+</script>

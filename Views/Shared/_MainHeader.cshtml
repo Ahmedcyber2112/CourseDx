@@ -1,0 +1,184 @@
+﻿@{
+
+    ViewData["username"] = @User.Identity.Name;
+    
+    if(ViewData["username"] != null)
+    {
+        <header class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border-b border-yellow-500/20">
+            <div class="flex items-center justify-between p-4 md:px-8">
+                <!-- Logo -->
+                <div class="flex-1 md:flex-none">
+                    <a asp-controller="Home" asp-action="Index" class="text-2xl font-bold text-gray-600 dark:text-white">
+                        Course<span class="text-yellow-500">Dx</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Search -->
+                <div class="hidden md:flex flex-1 max-w-md mx-6">
+                    <div class="relative w-full">
+                        <input type="text"
+                               placeholder="Search for Courses!"
+                               class="w-full bg-gray-100 text-gray-800 rounded-lg px-4 py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:bg-gray-600 dark:text-gray-200" />
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-search text-gray-500"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right side controls -->
+                <div class="flex items-center space-x-4">
+                    <!-- Calendar Icon - NEW -->
+                    <a asp-controller="Home" asp-action="Calendar" class="hidden md:flex items-center text-gray-600 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-500 transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </a>
+
+                    <!-- Theme Toggle Button -->
+                    <button id="theme-toggle" class="text-gray-400 hover:text-yellow-500 transition-colors">
+                        <!-- Sun icon for light mode -->
+                        <svg id="sun-icon" class="w-6 h-6 hidden" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" />
+                        </svg>
+                        <!-- Moon icon for dark mode -->
+                        <svg id="moon-icon" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                        </svg>
+                    </button>
+
+                    <!-- Mobile Search Icon -->
+                    <div class="md:hidden flex items-center">
+                        <button id="mobile-search-toggle" class="text-gray-400 hover:text-yellow-500 mr-4">
+                            <i class="fas fa-search h-6 w-6"></i>
+                        </button>
+                    </div>
+
+                    <!-- Desktop User Menu - FIXED VERSION -->
+                    <div class="hidden group md:flex items-center relative group z-50">
+                        <!-- User Avatar or Name -->
+                        <button class="flex items-center space-x-2 text-white focus:outline-none">
+                            <img src="https://cdn.pixabay.com/photo/2024/04/09/03/04/ai-generated-8684869_1280.jpg" alt="@User.Identity.Name" class="w-10 h-10 rounded-full border-2 border-yellow-500">
+                            <span class="text-sm font-medium hidden md:inline text-gray-600 dark:text-white group-hover:text-yellow-400">@User.Identity.Name</span>
+                        </button>
+
+                        <!-- Dropdown Menu -->
+                        <div class="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <a href="/Admin/AdminHome" class="text-yellow-400 block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700">Admin</a>
+                            }
+                            <a asp-controller="Account" asp-action="Profile" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Profile</a>
+
+                            <a asp-controller="Account" asp-action="MyCourses" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">My courses</a>
+
+                            <a asp-controller="Home" asp-action="Calendar" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 md:hidden">Calendar</a>
+                            <a asp-controller="Account" asp-action="Logout" class="block px-4 py-2 text-sm text-red-500 hover:bg-gray-100 dark:hover:bg-gray-700">Logout</a>
+                        </div>
+                    </div>
+
+                    <!-- Mobile User Icon -->
+                    <div class="md:hidden flex items-center">
+                        <a href="#">
+                            <img src="https://cdn.pixabay.com/photo/2024/04/09/03/04/ai-generated-8684869_1280.jpg" alt="@User.Identity.Name" class="w-8 h-8 rounded-full border-2 border-yellow-500">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Search Panel -->
+            <div id="mobile-search-panel" class="md:hidden p-4 border-t border-yellow-500/20 bg-gray-800/90 transition-max-height mobile-search-inactive">
+                <div class="relative">
+                    <input type="text"
+                           id="mobile-search-input"
+                           placeholder="Search for Courses!"
+                           class="w-full bg-gray-100 text-gray-800 rounded-lg px-4 py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:bg-gray-600 dark:text-gray-200" />
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-gray-500"></i>
+                    </div>
+                    <button id="mobile-search-close" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-yellow-500">
+                        <i class="fas fa-times h-6 w-6"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+    }else
+    {
+        
+   
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border-b border-yellow-500/20">
+    <div class="flex items-center justify-between p-4 md:px-8">
+        <!-- Logo -->
+        <div class="flex-1 md:flex-none">
+            <a asp-controller="Home" asp-action="Index" class="text-2xl font-bold text-gray-600 dark:text-white">
+                Course<span class="text-yellow-500">Dx</span>
+            </a>
+        </div>
+
+        <!-- Desktop Search -->
+        <div class="hidden md:flex flex-1 max-w-md mx-6">
+            <div class="relative w-full">
+                <input type="text"
+                       placeholder="Search for Courses!"
+                       class="w-full bg-gray-100 text-gray-800 rounded-lg px-4 py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:bg-gray-600 dark:text-gray-200" />
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i class="fas fa-search text-gray-500"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right side controls -->
+        <div class="flex items-center space-x-4">
+            <!-- Theme Toggle Button -->
+            <button id="theme-toggle" class="text-gray-400 hover:text-yellow-500 transition-colors">
+                <!-- Sun icon for light mode -->
+                <svg id="sun-icon" class="w-6 h-6 hidden" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" />
+                </svg>
+                <!-- Moon icon for dark mode -->
+                <svg id="moon-icon" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                </svg>
+            </button>
+
+            <!-- Mobile Search Icon -->
+            <div class="md:hidden flex items-center">
+                <button id="mobile-search-toggle" class="text-gray-400 hover:text-yellow-500 mr-4">
+                    <i class="fas fa-search h-6 w-6"></i>
+                </button>
+            </div>
+
+            <!-- Login Button (Desktop) -->
+            <div class="hidden md:block">
+                <a asp-controller="Account" asp-action="Login"
+                   class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-gray-900 px-6 py-2 rounded-lg font-medium hover:opacity-90 transition-opacity duration-300">
+                    Login
+                </a>
+            </div>
+
+            <!-- Mobile Login Icon -->
+            <div class="md:hidden flex items-center">
+                <a asp-controller="Account" asp-action="Login" class="text-gray-400 hover:text-yellow-500">
+                    <i class="fas fa-user h-6 w-6"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Search Panel -->
+    <div id="mobile-search-panel" class="md:hidden p-4 border-t border-yellow-500/20 bg-gray-800/90 transition-max-height mobile-search-inactive">
+        <div class="relative">
+            <input type="text"
+                   id="mobile-search-input"
+                   placeholder="Search for Courses!"
+                   class="w-full bg-gray-100 text-gray-800 rounded-lg px-4 py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:bg-gray-600 dark:text-gray-200" />
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i class="fas fa-search text-gray-500"></i>
+            </div>
+            <button id="mobile-search-close" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-yellow-500">
+                <i class="fas fa-times h-6 w-6"></i>
+            </button>
+        </div>
+    </div>
+</header>
+    }
+}

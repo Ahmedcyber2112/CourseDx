@@ -1,0 +1,72 @@
+﻿@model AppUser
+@{
+    ViewData["Title"] = "DELETE USER";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section id="delete-container" class="max-w-6xl mx-auto">
+    <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white px-6 pb-5 pt-6 dark:border-gray-800 dark:bg-white/[0.03] sm:px-8">
+        <div class="flex flex-col gap-2 mb-8 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <h3 class="text-xl font-semibold text-gray-800 dark:text-white/90">
+                    Delete User
+                </h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                    This action cannot be undone. All user data will be permanently removed.
+                </p>
+            </div>
+            <a asp-action="Index" class="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200">
+                Back
+            </a>
+        </div>
+
+        <div asp-validation-summary="All" class="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-600 dark:border-red-800 dark:bg-red-900/30 dark:text-red-400"></div>
+
+        <div class="mb-8">
+            <h4 class="text-lg font-medium text-gray-800 dark:text-white/90 mb-4">User Details</h4>
+
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <div class="mb-5">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">User Name</label>
+                    <div class="w-full rounded-lg border border-gray-200 bg-gray-50 p-3 text-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white">
+                        @Model.UserName
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                    <div class="w-full rounded-lg border border-gray-200 bg-gray-50 p-3 text-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white">
+                        @Model.Email
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">First Name</label>
+                    <div class="w-full rounded-lg border border-gray-200 bg-gray-50 p-3 text-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white">
+                        @Model.FirstName
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Last Name</label>
+                    <div class="w-full rounded-lg border border-gray-200 bg-gray-50 p-3 text-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white">
+                        @Model.LastName
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form asp-action="DeleteConfirmed" method="post" class="mt-8">
+            <input type="hidden" asp-for="Id" />
+
+            <div class="flex items-center justify-end gap-4">
+                <a asp-action="Index" class="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-5 py-3 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200">
+                    Cancel
+                </a>
+                <button type="submit" class="inline-flex items-center gap-2 rounded-lg border border-red-500 bg-red-600 px-5 py-3 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 dark:border-red-400 dark:bg-red-500 dark:hover:bg-red-600">
+                    Confirm Delete
+                </button>
+            </div>
+        </form>
+    </div>
+</section>

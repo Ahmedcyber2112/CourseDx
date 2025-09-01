@@ -1,0 +1,91 @@
+﻿@model IEnumerable<CourseDx.Entity.Course>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Controller"] = "Courses";
+    ViewData["Action"] = "Delete"; // ← Points to POST action
+}
+
+<script>
+    window.deleteConfig = {
+        controller: '@ViewData["Controller"]',
+        action: '@ViewData["Action"]'
+    };
+</script>
+
+<div class="admin-table-container">
+
+    <div class="admin-header">
+        <h1 class="admin-title">Courses</h1>
+        <a asp-action="Create" class="create-new-btn">
+            <i class="fas fa-plus-circle"></i> Create New
+        </a>
+    </div>
+
+    <table class="table jDataTable">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <!-- Update button -->
+                            <a class="action-btn update-btn px-8" asp-action="Edit" asp-route-id="@item.Id">
+                                Edit
+                            </a>
+
+                            <!-- Delete button -->
+                            <a href="#"
+                               class="action-btn delete-btn px-8"
+                               data-id="@item.Id"
+                               data-name="@item.Name">
+                                Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Cards for mobile view -->
+    <div class="user-cards">
+        @foreach (var item in Model)
+        {
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-label">Course</span>
+                    <span class="card-value">@item.Name</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-item">
+                        <span class="card-label">Name:</span>
+                        <span class="card-value">@item.Name</span>
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="card-btn card-btn-update">Edit</a>
+                    <a href="#" class="card-btn delete-btn"
+                       data-id="@item.Id"
+                       data-name="@item.Name">
+                        Delete
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@Html.Partial("DeleteComfirm")

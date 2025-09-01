@@ -1,0 +1,75 @@
+﻿@model IEnumerable<CourseDx.Models.InstractorCourses.InstractorCoursesInfo>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Controller"] = "InstractorCourses";
+    ViewData["Action"] = "Delete"; // ← Points to POST action
+}
+
+<script>
+    window.deleteConfig = {
+        controller: '@ViewData["Controller"]',
+        action: '@ViewData["Action"]'
+    };
+</script>
+
+<div class="admin-table-container">
+
+    <div class="admin-header">
+        <h1 class="admin-title">All Users</h1>
+        <a asp-action="Create" class="create-new-btn">
+            <i class="fas fa-plus-circle"></i> Create a User
+        </a>
+    </div>
+
+    <table class="table jDataTable">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.CourseName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.InstructorName)
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.InstructorName)
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <!-- Update button -->
+                            <a class="action-btn update-btn px-8" asp-action="Edit" asp-route-id="@item.Id">
+                                Update
+                            </a>
+
+                            <!-- Details button -->
+                            <a class="action-btn details-btn px-8" asp-action="Details" asp-route-id="@item.Id">
+                                Details
+                            </a>
+
+                            <!-- Delete button -->
+                            <a href="#"
+                               class="action-btn delete-btn px-8"
+                               data-id="@item.Id"
+                               data-name="Course Name: @item.CourseName | Instructor Name: @item.InstructorName">
+                                Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@Html.Partial("DeleteComfirm")

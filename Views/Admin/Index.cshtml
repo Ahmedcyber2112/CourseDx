@@ -1,0 +1,102 @@
+﻿@model IEnumerable<AppUser>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "All Users";
+    ViewData["Controller"] = "Admin";
+    ViewData["Action"] = "DeleteConfirmed"; // ← Points to POST action
+
+}
+
+<!-- Inject config into JS -->
+<script>
+    window.deleteConfig = {
+        controller: '@ViewData["Controller"]',
+        action: '@ViewData["Action"]'
+    };
+</script>
+<div class="admin-table-container">
+
+    <div class="admin-header">
+        <h1 class="admin-title">All Users</h1>
+        <a asp-action="create" class="create-new-btn">
+            <i class="fas fa-plus-circle"></i> Create a User
+        </a>
+    </div>
+
+    <table class="table jDataTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Is Admin</th>
+                <th>Actions</th> 
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.UserName</td>
+                    <td>@user.Email</td>
+                    <td>@(user.IsAdmin ? "Yes" : "No")</td>
+                    <td>
+                        <div class="action-buttons">
+                            <!-- Update button -->
+                            <a asp-action="Update" asp-route-id="@user.Id"
+                               class="action-btn update-btn px-8">
+                                Update
+                            </a>
+
+                            <!-- Delete button -->
+                            <a href="#"
+                               class="action-btn delete-btn px-8"
+                               data-id="@user.Id"
+                               data-name="@user.UserName"
+                               data-isadmin="@user.IsAdmin.ToString().ToLower()">
+                                Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<!-- Cards for mobile view -->
+<div class="user-cards">
+    @foreach (var user in Model)
+    {
+        <div class="card">
+            <div class="card-header">
+                <span class="card-label">ID:</span>
+                <span class="card-value">@user.Id</span>
+            </div>
+            <div class="card-body">
+                <div class="card-item">
+                    <span class="card-label">Username:</span>
+                    <span class="card-value">@user.UserName</span>
+                </div>
+                <div class="card-item">
+                    <span class="card-label">Email:</span>
+                    <span class="card-value">@user.Email</span>
+                </div>
+                <div class="card-item">
+                    <span class="card-label">Is Admin:</span>
+                    <span class="card-value">@(user.IsAdmin ? "Yes" : "No")</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <a asp-action="Update" asp-route-id="@user.Id" class="card-btn card-btn-update">Update</a>
+                <a href="#"
+                   data-id="@user.Id"
+                   data-name="@user.UserName"
+                   data-isadmin="@user.IsAdmin.ToString().ToLower()"
+                   class="card-btn delete-btn " >Delete</a>
+            </div>
+        </div>
+    }
+</div>
+<!-- Include the modal for delete pop up -->
+@Html.Partial("DeleteComfirm")

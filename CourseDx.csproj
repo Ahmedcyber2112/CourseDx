@@ -1,0 +1,144 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Shared\Partials\Admin\admin-map-01.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\alert\alert-error.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\alert\alert-info.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\alert\alert-success.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\alert\alert-warning.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\avatar\avatar-01.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\avatar\avatar-02.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\avatar\avatar-03.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\avatar\avatar-04.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\badge\badge-01.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\badge\badge-02.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\badge\badge-03.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\badge\badge-04.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\badge\badge-05.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\badge\badge-06.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\breadcrumb.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\buttons\button-01.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\buttons\button-02.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\buttons\button-03.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\buttons\button-04.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\buttons\button-05.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\buttons\button-06.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\calendar-event-modal.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\chart\chart-01.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\chart\chart-02.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\chart\chart-03.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\common-grid-shape.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\common-social-links.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\datepicker.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\grid-image\image-01.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\grid-image\image-02.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\grid-image\image-03.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\media-card.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\metric-group\metric-group-01.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\overlay.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\preloader.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\sidebar.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\table\admin_table-01.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\table\table-06.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\top-card-group.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\upcoming-schedule.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\video\video-01.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\video\video-02.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\video\video-03.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\video\video-04.cshtml" />
+    <Content Remove="Views\Shared\Partials\Admin\watchlist.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="backup\calendar-init.js" />
+    <Content Include="backup\map-01.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Shared\Partials\Admin\alert\alert-error.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\alert\alert-info.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\alert\alert-success.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\alert\alert-warning.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\avatar\avatar-01.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\avatar\avatar-02.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\avatar\avatar-03.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\avatar\avatar-04.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\badge\badge-01.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\badge\badge-02.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\badge\badge-03.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\badge\badge-04.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\badge\badge-05.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\badge\badge-06.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\breadcrumb.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\buttons\button-01.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\buttons\button-02.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\buttons\button-03.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\buttons\button-04.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\buttons\button-05.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\buttons\button-06.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\calendar-event-modal.cshtml" />
+    <None Include="Views\Shared\admin_chart-01.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\chart\chart-02.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\chart\chart-03.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\common-grid-shape.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\common-social-links.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\datepicker.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\grid-image\image-01.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\grid-image\image-02.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\grid-image\image-03.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\Adminheader.cshtml" />
+    <None Include="Views\Shared\admin-map-01.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\media-card.cshtml" />
+    <None Include="Views\Shared\admin-metric-group-01.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\overlay.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\preloader.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\sidebar.cshtml" />
+    <None Include="Views\Shared\admin_table-01.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\table\table-06.cshtml" />
+    <None Include="Views\Shared\Admin_top-card-group.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\upcoming-schedule.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\video\video-01.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\video\video-02.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\video\video-03.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\video\video-04.cshtml" />
+    <None Include="Views\Shared\Partials\Admin\watchlist.cshtml" />
+    <None Include="Views\Admin\AdminHome.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.105.0" />
+    <PackageReference Include="LigerShark.WebOptimizer.Core" Version="3.0.471" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.18" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.18" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.18">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.18" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.18">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+    <PackageReference Include="Rotativa.AspNetCore" Version="1.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\Rotativa\wkhtmltoimage.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Rotativa\wkhtmltopdf.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+
+</Project>

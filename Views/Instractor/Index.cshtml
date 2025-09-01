@@ -1,0 +1,112 @@
+﻿@model List<CourseDx.Entity.Instractor>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "All Users";
+    ViewData["Controller"] = "Instractor";
+    ViewData["Action"] = "Delete";
+}
+
+<script>
+    window.deleteConfig = {
+        controller: '@ViewData["Controller"]',
+        action: '@ViewData["Action"]'
+    };
+</script>
+
+<div class="admin-table-container">
+
+    <div class="admin-header">
+        <h1 class="admin-title">Instructors List</h1>
+        <a asp-action="Create" class="create-new-btn">
+            <i class="fas fa-plus-circle"></i> Create New
+        </a>
+    </div>
+
+    <table class="table jDataTable">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Gender</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var instructor in Model)
+            {
+                <tr>
+                    <td>@instructor.Title</td>
+                    <td>@instructor.Name</td>
+                    <td>@instructor.Description</td>
+                    <td>@(instructor.Gender == 0 ? "Male" : "Female")</td>
+                    <td>
+                        <div class="action-buttons">
+                            <!-- Update button -->
+                            <a asp-action="Edit" asp-route-id="@instructor.Id"
+                               class="action-btn update-btn px-8">
+                                Update
+                            </a>
+
+                            <!-- Details button -->
+                            <a asp-action="Details" asp-route-id="@instructor.Id"
+                               class="action-btn details-btn px-8">
+                                Details
+                            </a>
+
+                            <!-- Delete button -->
+                            <a href="#"
+                               class="action-btn delete-btn px-8"
+                               data-id="@instructor.Id"
+                               data-name="@instructor.Name">
+                                Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Cards for mobile view -->
+    <div class="user-cards">
+        @foreach (var instructor in Model)
+        {
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-label">Instructor</span>
+                    <span class="card-value">@instructor.Name</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-item">
+                        <span class="card-label">Title:</span>
+                        <span class="card-value">@instructor.Title</span>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-label">Name:</span>
+                        <span class="card-value">@instructor.Name</span>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-label">Description:</span>
+                        <span class="card-value">@instructor.Description</span>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-label">Gender:</span>
+                        <span class="card-value">@(instructor.Gender == 0 ? "Male" : "Female")</span>
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <a asp-action="Edit" asp-route-id="@instructor.Id" class="card-btn card-btn-update">Update</a>
+                    <a asp-action="Details" asp-route-id="@instructor.Id" class=" action-btn details-btn card-btn">Details</a>
+                    <a href="#" class="card-btn delete-btn"
+                       data-id="@instructor.Id"
+                       data-name="@instructor.Name">
+                        Delete
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@Html.Partial("DeleteComfirm")

@@ -1,0 +1,33 @@
+{
+  "name": "latest-version",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "esbuild wwwroot/js/**/*.js --bundle --minify --outdir=wwwroot/dist --external:jquery",
+
+    "build:chart": "esbuild wwwroot/js/chartModule.js --bundle --minify --outfile=wwwroot/dist/apexchart-core.min.js --format=iife --global-name=ApexChartCore",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "css:build": "npx @tailwindcss/cli -i ./wwwroot/css/tailwind/site.css -o ./wwwroot/css/global.css --minify",
+    "css:watch": "npx @tailwindcss/cli -i ./wwwroot/css/tailwind/site.css -o ./wwwroot/css/global.css --watch --minify --content './Views/**/*.cshtml'",
+    "watch:admin": "npx @tailwindcss/cli -i ./wwwroot/css/tailwind/admin.css -o ./wwwroot/css/admin.css --watch --content './Views/**/*.cshtml'",
+    "build:admin": "npx tailwindcss -i ./wwwroot/css/tailwind/admin.css -o ./wwwroot/css/admin.css --minify --content './Areas/Admin/Views/**/*.cshtml'",
+    "build:images": "node development/scripts/generate-responsive-images.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.11",
+    "esbuild": "^0.25.9",
+    "fs-extra": "^11.3.1",
+    "sharp": "^0.34.3",
+    "tailwindcss": "^4.1.11"
+  },
+  "dependencies": {
+    "alpinejs": "^3.14.9",
+    "apexcharts": "^5.3.4",
+    "dropzone": "^6.0.0-beta.2",
+    "flatpickr": "^4.6.13",
+    "jsvectormap": "^1.7.0"
+  }
+}

@@ -1,0 +1,295 @@
+﻿@{
+    ViewData["Title"] = "Course";
+   
+    ViewData["ReturnUrl"] = "/admin";
+    ViewData["Developer"] = "CourseDx Developers";
+}
+<section class="mt-12">
+
+    <!-- Background elements -->
+    <div class="fixed top-0 left-0 w-full h-full opacity-20 -z-10 pointer-events-none">
+        <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-yellow-400 rounded-full filter blur-3xl animate-pulse-slow opacity-40"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500 rounded-full filter blur-3xl opacity-50 animate-pulse-slow delay-1000"></div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="pt-20 min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 md:p-12 overflow-hidden relative bg-white dark:bg-gray-900">
+        <div class="w-full max-w-4xl bg-gray-50 dark:bg-gray-800/40 backdrop-blur-sm border border-yellow-500/30 dark:border-yellow-500/20 rounded-xl shadow-xl p-4 sm:p-6 md:p-8 relative z-10">
+            <div class="absolute -inset-2 bg-yellow-500/10 dark:bg-yellow-500/10 rounded-xl filter blur-xl -z-10"></div>
+
+            <div class="text-center mb-6 sm:mb-8">
+                <h1 class="font-awesome tracking-wide text-gray-900 dark:text-gray-100 text-2xl md:text-3xl font-bold">
+                    Course Content
+                </h1>
+                <p class="mt-2 text-gray-700 dark:text-gray-400">Learn programming step by step</p>
+
+                <!-- Animated underline -->
+                <div class="relative mt-4 mx-auto">
+                    <div class="h-1 bg-gradient-to-r from-yellow-400 to-yellow-600 transition-all duration-700 ease-out w-24 mx-auto"></div>
+                </div>
+            </div>
+
+            <!-- Video Player Container -->
+            <div class="mb-8 rounded-xl overflow-hidden shadow-lg">
+                <div class="aspect-w-16 aspect-h-9 bg-gray-900">
+                    <iframe id="courseVideo"
+                            class="w-full h-64 sm:h-80 md:h-96"
+                            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                            title="Course Video Player"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- Course Content Sections -->
+            <div class="space-y-4">
+                <!-- Section 1 - Open by default -->
+                <div class="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <button class="w-full flex justify-between items-center p-4 bg-gray-100 dark:bg-gray-700/50 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300"
+                            data-toggle="section1">
+                        <h3 class="font-semibold text-lg text-gray-900 dark:text-gray-100">Section 1: Introduction</h3>
+                        <svg class="h-5 w-5 text-gray-500 transform rotate-180 transition-transform duration-300"
+                             xmlns="http://www.w3.org/2000/svg"
+                             viewBox="0 0 20 20"
+                             fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div id="section1" class="p-4 bg-white dark:bg-gray-800/30">
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="#"
+                                   data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                                   class="block py-2 px-4 rounded hover:bg-gray-100 dark:hover:bg-gray-700/50 text-gray-800 dark:text-gray-200 transition-colors duration-200">
+                                    Welcome to the Course
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                   data-video-url="https://www.youtube.com/embed/jNQXAC9IVRw"
+                                   class="block py-2 px-4 rounded hover:bg-gray-100 dark:hover:bg-gray-700/50 text-gray-800 dark:text-gray-200 transition-colors duration-200">
+                                    Setting up Environment
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                   data-video-url="https://www.youtube.com/embed/oHg5SJYRHA0"
+                                   class="block py-2 px-4 rounded hover:bg-gray-100 dark:hover:bg-gray-700/50 text-gray-800 dark:text-gray-200 transition-colors duration-200">
+                                    First Program
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Section 2 -->
+                <div class="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <button class="w-full flex justify-between items-center p-4 bg-gray-100 dark:bg-gray-700/50 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300"
+                            data-toggle="section2">
+                        <h3 class="font-semibold text-lg text-gray-900 dark:text-gray-100">Section 2: Variables and Data Types</h3>
+                        <svg class="h-5 w-5 text-gray-500 transition-transform duration-300"
+                             xmlns="http://www.w3.org/2000/svg"
+                             viewBox="0 0 20 20"
+                             fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div id="section2" class="p-4 bg-white dark:bg-gray-800/30 hidden">
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="#"
+                                   data-video-url="https://www.youtube.com/embed/3JluqTojuME"
+                                   class="block py-2 px-4 rounded hover:bg-gray-100 dark:hover:bg-gray-700/50 text-gray-800 dark:text-gray-200 transition-colors duration-200">
+                                    Understanding Variables
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                   data-video-url="https://www.youtube.com/embed/9QlmP0hZJlI"
+                                   class="block py-2 px-4 rounded hover:bg-gray-100 dark:hover:bg-gray-700/50 text-gray-800 dark:text-gray-200 transition-colors duration-200">
+                                    Data Types Overview
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                   data-video-url="https://www.youtube.com/embed/1Rs2ND1ryYc"
+                                   class="block py-2 px-4 rounded hover:bg-gray-100 dark:hover:bg-gray-700/50 text-gray-800 dark:text-gray-200 transition-colors duration-200">
+                                    Type Conversion
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Section 3 -->
+                <div class="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <button class="w-full flex justify-between items-center p-4 bg-gray-100 dark:bg-gray-700/50 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300"
+                            data-toggle="section3">
+                        <h3 class="font-semibold text-lg text-gray-900 dark:text-gray-100">Section 3: Control Structures</h3>
+                        <svg class="h-5 w-5 text-gray-500 transition-transform duration-300"
+                             xmlns="http://www.w3.org/2000/svg"
+                             viewBox="0 0 20 20"
+                             fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div id="section3" class="p-4 bg-white dark:bg-gray-800/30 hidden">
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="#"
+                                   data-video-url="https://www.youtube.com/embed/fZPgBnL2x-Q"
+                                   class="block py-2 px-4 rounded hover:bg-gray-100 dark:hover:bg-gray-700/50 text-gray-800 dark:text-gray-200 transition-colors duration-200">
+                                    Conditional Statements
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                   data-video-url="https://www.youtube.com/embed/9M4XKi25I2M"
+                                   class="block py-2 px-4 rounded hover:bg-gray-100 dark:hover:bg-gray-700/50 text-gray-800 dark:text-gray-200 transition-colors duration-200">
+                                    Loops Introduction
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                   data-video-url="https://www.youtube.com/embed/OnVtJ_7T-6s"
+                                   class="block py-2 px-4 rounded hover:bg-gray-100 dark:hover:bg-gray-700/50 text-gray-800 dark:text-gray-200 transition-colors duration-200">
+                                    Loop Types Comparison
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Section 4 -->
+                <div class="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <button class="w-full flex justify-between items-center p-4 bg-gray-100 dark:bg-gray-700/50 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300"
+                            data-toggle="section4">
+                        <h3 class="font-semibold text-lg text-gray-900 dark:text-gray-100">Section 4: Functions</h3>
+                        <svg class="h-5 w-5 text-gray-500 transition-transform duration-300"
+                             xmlns="http://www.w3.org/2000/svg"
+                             viewBox="0 0 20 20"
+                             fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div id="section4" class="p-4 bg-white dark:bg-gray-800/30 hidden">
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="#"
+                                   data-video-url="https://www.youtube.com/embed/lX9hsdsAeTk"
+                                   class="block py-2 px-4 rounded hover:bg-gray-100 dark:hover:bg-gray-700/50 text-gray-800 dark:text-gray-200 transition-colors duration-200">
+                                    What are Functions?
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                   data-video-url="https://www.youtube.com/embed/N8ap4l8Vj1g"
+                                   class="block py-2 px-4 rounded hover:bg-gray-100 dark:hover:bg-gray-700/50 text-gray-800 dark:text-gray-200 transition-colors duration-200">
+                                    Function Parameters
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                   data-video-url="https://www.youtube.com/embed/BzuBkXp99Ek"
+                                   class="block py-2 px-4 rounded hover:bg-gray-100 dark:hover:bg-gray-700/50 text-gray-800 dark:text-gray-200 transition-colors duration-200">
+                                    Return Values
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Section 5 -->
+                <div class="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <button class="w-full flex justify-between items-center p-4 bg-gray-100 dark:bg-gray-700/50 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300"
+                            data-toggle="section5">
+                        <h3 class="font-semibold text-lg text-gray-900 dark:text-gray-100">Section 5: Advanced Concepts</h3>
+                        <svg class="h-5 w-5 text-gray-500 transition-transform duration-300"
+                             xmlns="http://www.w3.org/2000/svg"
+                             viewBox="0 0 20 20"
+                             fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div id="section5" class="p-4 bg-white dark:bg-gray-800/30 hidden">
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="#"
+                                   data-video-url="https://www.youtube.com/embed/9M4XKi25I2M"
+                                   class="block py-2 px-4 rounded hover:bg-gray-100 dark:hover:bg-gray-700/50 text-gray-800 dark:text-gray-200 transition-colors duration-200">
+                                    Error Handling
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                   data-video-url="https://www.youtube.com/embed/fZPgBnL2x-Q"
+                                   class="block py-2 px-4 rounded hover:bg-gray-100 dark:hover:bg-gray-700/50 text-gray-800 dark:text-gray-200 transition-colors duration-200">
+                                    Debugging Techniques
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                   data-video-url="https://www.youtube.com/embed/OnVtJ_7T-6s"
+                                   class="block py-2 px-4 rounded hover:bg-gray-100 dark:hover:bg-gray-700/50 text-gray-800 dark:text-gray-200 transition-colors duration-200">
+                                    Best Practices
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</section>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Section toggle functionality
+        const toggleButtons = document.querySelectorAll('[data-toggle]');
+        
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-toggle');
+                const targetSection = document.getElementById(targetId);
+                const icon = this.querySelector('svg');
+                
+                // Toggle visibility
+                targetSection.classList.toggle('hidden');
+                
+                // Rotate icon
+                icon.classList.toggle('rotate-180');
+            });
+        });
+
+        // Video switching functionality
+        const videoLinks = document.querySelectorAll('a[data-video-url]');
+        const videoPlayer = document.getElementById('courseVideo');
+        
+        videoLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const videoUrl = this.getAttribute('data-video-url');
+                
+                // Update video source
+                videoPlayer.src = videoUrl;
+                
+                // Optional: Scroll to video player
+                videoPlayer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // Optional: Add active class to clicked link
+                document.querySelectorAll('a[data-video-url]').forEach(l => l.classList.remove('bg-yellow-100', 'dark:bg-yellow-900/30'));
+                this.classList.add('bg-yellow-100', 'dark:bg-yellow-900/30');
+            });
+        });
+
+        // Open first section by default
+        const firstSection = document.getElementById('section1');
+        const firstButton = document.querySelector('[data-toggle="section1"] svg');
+        if (firstSection && firstButton) {
+            firstSection.classList.remove('hidden');
+            firstButton.classList.add('rotate-180');
+        }
+    });
+</script>

@@ -1,0 +1,99 @@
+﻿@model CourseDx.Entity.Instractor
+
+@{
+    ViewData["Title"] = "INSTRUCTOR DETAILS";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section id="instructor-details-container" class="max-w-3xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+
+        <!-- Header -->
+        <div class="border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50 px-6 py-5">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-800">Instructor Details</h3>
+                    <p class="text-sm text-gray-600 mt-1">View the details of the selected instructor.</p>
+                </div>
+                <div class="flex gap-2">
+                    <a asp-action="Edit" asp-route-id="@Model.Id"
+                       class="inline-flex items-center justify-center gap-2 rounded-lg border border-blue-500 bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-xs hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
+
+                        Edit
+                    </a>
+                    <a asp-action="Index"
+                       class="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-xs hover:bg-gray-50 transition-colors">
+
+                        Back to List
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Details Section -->
+        <div class="px-6 py-6">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+
+                <!-- Title -->
+                <div class="sm:col-span-1">
+                    <p class="text-sm font-medium text-gray-500 flex items-center gap-2">
+
+                        @Html.DisplayNameFor(model => model.Title):
+                    </p>
+                </div>
+                <div class="sm:col-span-2">
+                    <p class="text-sm text-gray-900">
+                        @Html.DisplayFor(model => model.Title)
+                    </p>
+                </div>
+
+                <!-- Name -->
+                <div class="sm:col-span-1">
+                    <p class="text-sm font-medium text-gray-500 flex items-center gap-2">
+
+                        @Html.DisplayNameFor(model => model.Name):
+                    </p>
+                </div>
+                <div class="sm:col-span-2">
+                    <p class="text-sm text-gray-900">
+                        @Html.DisplayFor(model => model.Name)
+                    </p>
+                </div>
+
+                <!-- Description -->
+                <div class="sm:col-span-1">
+                    <p class="text-sm font-medium text-gray-500 flex items-center gap-2">
+
+                        @Html.DisplayNameFor(model => model.Description):
+                    </p>
+                </div>
+                <div class="sm:col-span-2">
+                    <p class="text-sm text-gray-900">
+                        @Html.DisplayFor(model => model.Description)
+                    </p>
+                </div>
+
+                <!-- Gender -->
+                <div class="sm:col-span-1">
+                    <p class="text-sm font-medium text-gray-500 flex items-center gap-2">
+
+                        @Html.DisplayNameFor(model => model.Gender):
+                    </p>
+                </div>
+                <div class="sm:col-span-2">
+                    <p class="text-sm text-gray-900">
+                        @(Model.Gender == 0 ? "Male" : "Female")
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

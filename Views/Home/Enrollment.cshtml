@@ -1,0 +1,206 @@
+﻿@{
+
+    ViewData["Developer"] = "CourseDx Developers";
+    var username = User.Identity.Name;
+    var email = "Example@Gmail.com";
+    var phone = "010100220302";
+    var imageUrl = Context.Request.Query["imgurl"].ToString();
+
+    Console.WriteLine(imageUrl);
+    var title = Context.Request.Query["title"].ToString();
+    var instructor = Context.Request.Query["instructor"].ToString();
+    var oldprice = Context.Request.Query["oldprice"].ToString();
+    var actualprice = Context.Request.Query["actualprice"].ToString();
+
+    // Fix the image path to include the full URL
+    var imageBaseName = imageUrl?.Replace(".webp", "");
+    var fullImageUrl = Url.Content($"{imageUrl}");
+}
+<!-- Main Content -->
+<main class="pt-20 min-h-screen relative bg-white dark:bg-gray-900 px-4">
+
+    <!-- Background Elements -->
+    <div class="fixed top-0 left-0 w-full h-full opacity-20 z-0 pointer-events-none">
+        <div class="absolute top-1/3 left-1/4 w-64 h-64 bg-yellow-400 rounded-full blur-3xl opacity-40 animate-pulse-slow"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500 rounded-full blur-3xl opacity-50 animate-pulse-slow delay-1000"></div>
+    </div>
+
+    <!-- Page Header -->
+    <section class="py-8 text-center relative z-10">
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
+            Enroll in <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-yellow-600">@title</span>
+        </h1>
+        <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">Complete your enrollment in 3 simple steps</p>
+    </section>
+
+    <!-- Course Overview Card -->
+    <section class="max-w-lg mx-auto mb-8 relative z-10">
+        <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-yellow-500/20 rounded-xl overflow-hidden shadow-lg">
+            <img srcset="@Url.Content($"~/img/400w/{imageBaseName}-400.webp") 400w,
+             @Url.Content($"~/img/800w/{imageBaseName}-800.webp") 800w,
+             @Url.Content($"~/img/1200w/{imageBaseName}-1200.webp") 1200w"
+                 sizes="(max-width: 600px) 400px,
+            (max-width: 1024px) 800px,
+            1200px"
+                 src="@Url.Content($"{imageBaseName}.webp")"
+                 alt="@title"
+                 loading="lazy"
+                 class="w-full h-48 object-cover transition-transform duration-300" />
+            <div class="p-5">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">@title</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">By @instructor • 12 Weeks</p>
+                <div class="flex items-center mt-2">
+                    <i class="fas fa-star text-yellow-500 mr-1 text-sm"></i>
+                    <span class="text-sm text-yellow-600 dark:text-yellow-500 font-bold">4.9 (1.2k ratings)</span>
+                </div>
+                <div class="mt-3 flex justify-between items-center">
+                    <div>
+                        <span class="text-lg font-bold text-yellow-600 dark:text-yellow-500">$@actualprice</span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400 line-through ml-2">$@oldprice</span>
+                    </div>
+                    <span class="text-xs bg-yellow-500 text-gray-900 px-2 py-1 rounded-full font-bold">25% OFF</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enrollment Form -->
+    <section class="max-w-lg mx-auto bg-white dark:bg-gray-800 border border-gray-200 dark:border-yellow-500/20 rounded-xl p-5 shadow-lg relative z-10">
+
+        <form id="enrollment-form">
+            <!-- Step 1: Personal Info -->
+            <div class="mb-8">
+                <h2 class="text-lg font-bold mb-4 flex items-center">
+                    <span class="w-6 h-6 rounded-full bg-yellow-500 text-white text-xs flex items-center justify-center mr-2">1</span>
+                    Personal Information
+                </h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
+                        <input type="text"
+                               class="w-full bg-gray-50 dark:bg-gray-700 border-0 rounded-lg px-4 py-3 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                               placeholder="Enter your full name"
+                               value="@User.Identity.Name"
+                               @(User.Identity.Name != null ? "disabled" : null)
+                               required />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                        <input type="email"
+                               class="w-full bg-gray-50 dark:bg-gray-700 border-0 rounded-lg px-4 py-3 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                               placeholder="you@example.com"
+                               value="@(User.Identity.Name != null ? email : null)"
+                               @(User.Identity.Name != null ? "disabled" : null)
+                               required />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone (Optional)</label>
+                        <input type="tel"
+                               class="w-full bg-gray-50 dark:bg-gray-700 border-0 rounded-lg px-4 py-3 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                               placeholder="+1 (555) 123-4567"
+                               value="@(User.Identity.Name != null ? phone : null)"
+                               @(User.Identity.Name != null ? "disabled" : null) />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Learning Goals -->
+            <div class="mb-8">
+                <h2 class="text-lg font-bold mb-4 flex items-center">
+                    <span class="w-6 h-6 rounded-full bg-yellow-500 text-white text-xs flex items-center justify-center mr-2">2</span>
+                    Your Learning Goals
+                </h2>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Help us personalize your experience.</p>
+                <div class="space-y-3">
+                    <label class="flex items-center">
+                        <input type="radio" name="goal" value="career" class="text-yellow-500 focus:ring-yellow-500 mr-2" />
+                        <span class="text-gray-700 dark:text-gray-300 text-sm">Advance my career</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="goal" value="skill" class="text-yellow-500 focus:ring-yellow-500 mr-2" />
+                        <span class="text-gray-700 dark:text-gray-300 text-sm">Learn a new skill</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="goal" value="cert" class="text-yellow-500 focus:ring-yellow-500 mr-2" />
+                        <span class="text-gray-700 dark:text-gray-300 text-sm">Earn a certification</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Step 3: Payment -->
+            <div class="mb-8">
+                <h2 class="text-lg font-bold mb-4 flex items-center">
+                    <span class="w-6 h-6 rounded-full bg-yellow-500 text-white text-xs flex items-center justify-center mr-2">3</span>
+                    Payment Information
+                </h2>
+                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg mb-4">
+                    <div class="flex justify-between text-sm">
+                        <span class="font-bold text-black dark:text-yellow-400">@title</span>
+                        <span class="font-bold text-black-600  dark:text-white">$@actualprice</span>
+                    </div>
+                    <hr class="my-2 border-gray-300 dark:border-gray-600" />
+                    <div class="flex justify-between font-bold">
+                        <span class="font-bold text-yellow-600 dark:text-yellow-500">Total</span>
+                        <span class="text-black-600  dark:text-white">$@actualprice</span>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Card Number</label>
+                        <input type="text"
+                               class="w-full bg-gray-50 dark:bg-gray-700 border-0 rounded-lg px-4 py-3 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                               placeholder="1234 5678 9012 3456" required />
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Expiry</label>
+                            <input type="text"
+                                   class="w-full bg-gray-50 dark:bg-gray-700 border-0 rounded-lg px-4 py-3 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                                   placeholder="MM/YY" required />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">CVV</label>
+                            <input type="text"
+                                   class="w-full bg-gray-50 dark:bg-gray-700 border-0 rounded-lg px-4 py-3 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                                   placeholder="123" required />
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="terms" class="text-yellow-500 focus:ring-yellow-500 mr-2" required />
+                        <label for="terms" class="text-sm text-gray-700 dark:text-gray-300">
+                            I agree to the <a href="#" class="text-yellow-500 hover:underline">Terms & Conditions</a>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit"
+                    class="w-full bg-gradient-to-r from-yellow-400 to-yellow-600 text-gray-900 py-3 rounded-lg font-bold text-lg hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                Enroll Now - $@actualprice
+            </button>
+
+            <p class="text-xs text-gray-500 dark:text-gray-400 text-center mt-4">
+                Secure checkout • 30-day money-back guarantee
+            </p>
+        </form>
+    </section>
+
+    <!-- Trust Badges (Mobile-Friendly) -->
+    <section class="max-w-lg mx-auto mt-8 pb-12 text-center relative z-10">
+        <div class="flex flex-wrap justify-center gap-6 text-sm text-gray-500 dark:text-gray-400">
+            <div class="flex items-center">
+                <i class="fas fa-lock mr-2"></i> Secure Payment
+            </div>
+            <div class="flex items-center">
+                <i class="fas fa-shield-alt mr-2"></i> SSL Encrypted
+            </div>
+            <div class="flex items-center">
+                <i class="fas fa-undo mr-2"></i> 30-Day Refund
+            </div>
+        </div>
+    </section>
+</main>

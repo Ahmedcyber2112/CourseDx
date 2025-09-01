@@ -1,0 +1,61 @@
+﻿@{
+    bool needsValidation = ViewData["FormValidation"] as bool? ?? false;
+    var renderHeader = !(ViewData["header"] != null && !Convert.ToBoolean(ViewData["header"]));
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- SEO -->
+    <title>@ViewData["Title"] - CourseDx</title>
+    <meta name="description" content="Learn about our courses...">
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- Resource hints (keep only what you actually use) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+
+    <link rel="preload"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+          as="style"
+          onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    </noscript>
+
+    <link rel="stylesheet" href="~/css/global.css" asp-append-version="true" />
+</head>
+<body class="font-sans bg-white text-gray-800">
+
+    @if (renderHeader)
+    {
+        @await Html.PartialAsync("_MainHeader")
+    }
+
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <footer class="text-center text-black dark:text-white py-4">
+        Made by  <span class="text-yellow-400">@ViewData["Developer"]</span>
+    </footer>
+
+    <script src="~/dist/main.js" asp-append-version="true" defer></script>
+    @if (needsValidation)
+    {
+        <script src="~/dist/FormValidation.js" asp-append-version="true" defer></script>
+    }
+
+    @* Page-specific scripts go here (e.g., Home/Index adds its chart bundle only on that page) *@
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

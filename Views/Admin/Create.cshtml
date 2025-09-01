@@ -1,0 +1,160 @@
+﻿@model CourseDx.Models.User
+@{
+    ViewData["Title"] = "CREATE USER";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["FormValidation"] = true;
+}
+
+<section id="create-container" class="max-w-3xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+
+        <!-- Header -->
+        <div class="border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50 px-6 py-5">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-800">Create New User</h3>
+                    <p class="text-sm text-gray-600 mt-1">Fill in the details below to add a new user.</p>
+                </div>
+                <a asp-action="Index"
+                   class="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-xs hover:bg-gray-50 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-left">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M5 12l14 0" />
+                        <path d="M5 12l6 6" />
+                        <path d="M5 12l6 -6" />
+                    </svg>
+                    Back to List
+                </a>
+            </div>
+        </div>
+
+        <!-- Form Section -->
+        <form method="post" class="px-6 py-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+                <!-- Username -->
+                <div class="sm:col-span-2 relative">
+                    <label asp-for="UserName" class="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-user">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                            <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                        </svg>
+                        Username
+                    </label>
+                    <input asp-for="UserName"
+                           class="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm shadow-xs focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition" />
+                    <span asp-validation-for="UserName" class="mt-1 text-xs text-red-600 block"></span>
+                </div>
+
+                <!-- First Name -->
+                <div>
+                    <label asp-for="FirstName" class="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-id">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M3 4m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z" />
+                            <path d="M9 10m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                            <path d="M15 8l2 0" />
+                            <path d="M15 12l2 0" />
+                            <path d="M7 16l10 0" />
+                        </svg>
+                        First Name
+                    </label>
+                    <input asp-for="FirstName"
+                           class="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm shadow-xs focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition" />
+                    <span asp-validation-for="FirstName" class="mt-1 text-xs text-red-600 block"></span>
+                </div>
+
+                <!-- Last Name -->
+                <div>
+                    <label asp-for="LastName" class="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-id">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M3 4m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z" />
+                            <path d="M9 10m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                            <path d="M15 8l2 0" />
+                            <path d="M15 12l2 0" />
+                            <path d="M7 16l10 0" />
+                        </svg>
+                        Last Name
+                    </label>
+                    <input asp-for="LastName"
+                           class="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm shadow-xs focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition" />
+                    <span asp-validation-for="LastName" class="mt-1 text-xs text-red-600 block"></span>
+                </div>
+
+                <!-- Email -->
+                <div class="sm:col-span-2">
+                    <label asp-for="Email" class="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-mail">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" />
+                            <path d="M3 7l9 6l9 -6" />
+                        </svg>
+                        Email Address
+                    </label>
+                    <input asp-for="Email" type="email"
+                           class="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm shadow-xs focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition" />
+                    <span asp-validation-for="Email" class="mt-1 text-xs text-red-600 block"></span>
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <label asp-for="Password" class="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-lock">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6z" />
+                            <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+                            <path d="M8 11v-4a4 4 0 1 1 8 0v4" />
+                        </svg>  
+                        Password
+                    </label>
+                    <input asp-for="Password" type="password"
+                           class="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm shadow-xs focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition" />
+                    <span asp-validation-for="Password" class="mt-1 text-xs text-red-600 block"></span>
+                </div>
+
+                <!-- Confirm Password -->
+                <div>
+                    <label asp-for="ConfirmPassword" class="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-lock-check">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6z" />
+                            <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+                            <path d="M8 11v-4a4 4 0 1 1 8 0v4" />
+                            <path d="M15 19l2 2l4 -4" />
+                        </svg>
+                        Confirm Password
+                    </label>
+                    <input asp-for="ConfirmPassword" type="password"
+                           class="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm shadow-xs focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition" />
+                    <span asp-validation-for="ConfirmPassword" class="mt-1 text-xs text-red-600 block"></span>
+                </div>
+
+                <!-- IsAdmin Checkbox -->
+                <div class="sm:col-span-2">
+                    <div class="flex items-center">
+                        <input asp-for="IsAdmin" type="checkbox" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+                        <label asp-for="IsAdmin" class="ml-2 block text-sm text-gray-900">
+                            Is Admin
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="mt-8 flex justify-end">
+                <button type="submit"
+                        class="rounded-lg bg-gradient-to-r from-blue-600 to-indigo-700 px-6 py-2.5 text-sm font-medium text-white shadow-md hover:from-blue-700 hover:to-indigo-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200">
+                    Create User
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
