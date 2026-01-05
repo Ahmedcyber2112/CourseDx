@@ -6,17 +6,17 @@ namespace CourseDx.Models
     {
         [Required(ErrorMessage = "Username is required.")]
         [MinLength(3, ErrorMessage = "Username must be at least 3 characters long.")]
-        public string Username { get; set; }
+        public string Username { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Email address is required.")]
         [EmailAddress(ErrorMessage = "Invalid email address.")]
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "First Name is required.")]
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Last Name is required.")]
-        public string LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
 
         // Password change fields - optional
         [DataType(DataType.Password)]

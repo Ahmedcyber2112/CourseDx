@@ -1,7 +1,7 @@
 ﻿@{
 
     ViewData["Developer"] = "CourseDx Developers";
-    var username = User.Identity.Name;
+    var username = User?.Identity?.Name ?? string.Empty;
     var email = "Example@Gmail.com";
     var phone = "010100220302";
     var imageUrl = Context.Request.Query["imgurl"].ToString();
@@ -80,8 +80,8 @@
                         <input type="text"
                                class="w-full bg-gray-50 dark:bg-gray-700 border-0 rounded-lg px-4 py-3 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-500"
                                placeholder="Enter your full name"
-                               value="@User.Identity.Name"
-                               @(User.Identity.Name != null ? "disabled" : null)
+                               value="@User?.Identity?.Name"
+                               @(User?.Identity?.Name != null ? "disabled" : null)
                                required />
                     </div>
 
@@ -90,8 +90,8 @@
                         <input type="email"
                                class="w-full bg-gray-50 dark:bg-gray-700 border-0 rounded-lg px-4 py-3 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-500"
                                placeholder="you@example.com"
-                               value="@(User.Identity.Name != null ? email : null)"
-                               @(User.Identity.Name != null ? "disabled" : null)
+                               value="@(User?.Identity?.Name != null ? email : null)"
+                               @(User?.Identity?.Name != null ? "disabled" : null)
                                required />
                     </div>
 
@@ -100,8 +100,8 @@
                         <input type="tel"
                                class="w-full bg-gray-50 dark:bg-gray-700 border-0 rounded-lg px-4 py-3 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-500"
                                placeholder="+1 (555) 123-4567"
-                               value="@(User.Identity.Name != null ? phone : null)"
-                               @(User.Identity.Name != null ? "disabled" : null) />
+                               value="@(User?.Identity?.Name != null ? phone : null)"
+                               @(User?.Identity?.Name != null ? "disabled" : null) />
                     </div>
                 </div>
             </div>

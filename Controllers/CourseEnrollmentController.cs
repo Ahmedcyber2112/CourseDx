@@ -97,59 +97,9 @@ namespace CourseDx.Controllers
             return View(model);
         }
 
-        //// GET: CourseEnrollment/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null)
-        //        return NotFound();
-
-        //    var enrollment = await _context.CourseEnrollment.FindAsync(id);
-        //    if (enrollment == null)
-        //        return NotFound();
-
-        //    ViewBag.StudentId = new SelectList(_context.Students, "Id", "Full_Name", enrollment.StudentId);
-        //    ViewBag.CourseDetalsId = new SelectList(_context.CourseDetals, "id", "Title", enrollment.CourseDetalsId);
-
-        //    return View(enrollment);
-        //}
-
-        //// POST: CourseEnrollment/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, CourseEnrollment enrollment)
-        //{
-        //    if (id != enrollment.Id)
-        //        return NotFound();
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(enrollment);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!CourseEnrollmentExists(enrollment.Id))
-        //                return NotFound();
-        //            else
-        //                throw;
-        //        }
-
-        //        return RedirectToAction(nameof(Index));
-        //    }
-
-        //    ViewBag.StudentId = new SelectList(_context.Students, "Id", "Full_Name", enrollment.StudentId);
-        //    ViewBag.CourseDetalsId = new SelectList(_context.CourseDetals, "id", "Title", enrollment.CourseDetalsId);
-
-        //    return View(enrollment);
-        //}
-
-     
-   
-
         // POST: CourseEnrollment/Delete/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var enrollment = await _context.CourseEnrollment.FindAsync(id);

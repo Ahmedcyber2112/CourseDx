@@ -7,6 +7,6 @@ namespace CourseDx.Models.Courses
         //[Required]
         [Required(ErrorMessage = "Course Name is required")]
         [Display(Name = "Course Name")]
-        public string CourseName { get; set; }
+        public string CourseName { get; set; } = string.Empty;
     }
 }

@@ -93,37 +93,22 @@ namespace CourseDx.Controllers
             return View(courseDetals);
         }
 
-        //// GET: CourseDetals/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null) return NotFound();
-
-        //    var courseDetals = await _context.CourseDetals
-        //        .Include(c => c.Course)
-        //        .Include(c => c.Instractor)
-        //        .FirstOrDefaultAsync(m => m.id == id);
-
-        //    if (courseDetals == null) return NotFound();
-
-        //    return View(courseDetals);
-        //}
-
         // POST: CourseDetals/Delete/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var courseDetails = await _context.CourseDetals
-                .Include(x=>x.CourseEnrollment)
-                .FirstOrDefaultAsync(x=>x.id==id);
+                .Include(x => x.CourseEnrollment)
+                .FirstOrDefaultAsync(x => x.id == id);
 
-            //التحقق من Null
             if (courseDetails == null)
                 return NotFound();
-             
-                _context.CourseEnrollment.RemoveRange(courseDetails.CourseEnrollment);
-                _context.CourseDetals.Remove(courseDetails);
-                await _context.SaveChangesAsync();
-              
+
+            _context.CourseEnrollment.RemoveRange(courseDetails.CourseEnrollment);
+            _context.CourseDetals.Remove(courseDetails);
+            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 

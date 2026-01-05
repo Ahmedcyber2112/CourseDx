@@ -19,32 +19,22 @@ namespace CourseDx.Data
 
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
 
+            // تعيين سلوك الحذف المقيد لجميع العلاقات
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
-
-            base.OnModelCreating(modelBuilder);
-            base.OnModelCreating(modelBuilder);
 
             // تحديد الدقة والسكيل للـ Price لتجنب التحذيرات والأخطاء
             modelBuilder.Entity<CourseDetals>()
                 .Property(cd => cd.Price)
                 .HasPrecision(18, 2);
 
-
             // جعل الايميل Unique
-
-            base.OnModelCreating(modelBuilder);
-
             modelBuilder.Entity<AppUser>()
                    .HasIndex(u => u.Email)
                    .IsUnique();

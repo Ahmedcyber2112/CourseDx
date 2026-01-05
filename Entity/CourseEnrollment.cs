@@ -11,10 +11,10 @@ namespace CourseDx.Entity
 
          
         [ValidateNever]
-        public Student Student { get; set; }
+        public Student Student { get; set; } = null!;
 
         [ValidateNever]
-        public CourseDetals CourseDetals { get; set; }
+        public CourseDetals CourseDetals { get; set; } = null!;
 
 
 

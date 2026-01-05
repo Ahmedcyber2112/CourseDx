@@ -6,7 +6,7 @@ namespace CourseDx.Models.Admin
     // فئة بسيطة لتخزين نقاط البيانات للمخططات
     public class ChartDataPoint
     {
-        public string Label { get; set; } // Example: "Jan", "Feb" or "C# Course"
+        public string Label { get; set; } = string.Empty; // Example: "Jan", "Feb" or "C# Course"
         public decimal Value { get; set; } // Example: 150 (students) or 12000 (revenue)
     }
 
@@ -21,9 +21,9 @@ namespace CourseDx.Models.Admin
 
         // New properties to hold data for the ApexCharts
         // خصائص جديدة لتمرير البيانات لمخططات ApexCharts
-        public List<ChartDataPoint> StudentGrowthData { get; set; }
-        public List<ChartDataPoint> CourseEnrollmentData { get; set; }
-        public List<ChartDataPoint> RevenueGrowthData { get; set; }
-        public List<ChartDataPoint> InstructorGrowthData { get; set; }
+        public List<ChartDataPoint> StudentGrowthData { get; set; } = new List<ChartDataPoint>();
+        public List<ChartDataPoint> CourseEnrollmentData { get; set; } = new List<ChartDataPoint>();
+        public List<ChartDataPoint> RevenueGrowthData { get; set; } = new List<ChartDataPoint>();
+        public List<ChartDataPoint> InstructorGrowthData { get; set; } = new List<ChartDataPoint>();
     }
 }

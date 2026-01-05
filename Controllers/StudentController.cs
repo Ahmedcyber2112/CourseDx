@@ -17,9 +17,9 @@ namespace CourseDx.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {   
-            return View(_context.Students.ToList());
+            return View(await _context.Students.ToListAsync());
         }
 
         [HttpGet]
@@ -29,11 +29,17 @@ namespace CourseDx.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Student student)
-        { 
-                _context.Students.Add(student);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index)); 
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Student student)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(student);
+            }
+            
+            _context.Students.Add(student);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
@@ -53,10 +59,16 @@ namespace CourseDx.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Student student)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Student student)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(student);
+            }
+            
             _context.Students.Update(student);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

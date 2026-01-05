@@ -1,6 +1,6 @@
 ﻿@{
     bool needsValidation = ViewData["FormValidation"] as bool? ?? false;
-    ViewData["username"] = @User.Identity.Name;
+    ViewData["username"] = User?.Identity?.Name;
     ViewData["email"] = "example@gmail.com";
 }
 <!DOCTYPE html>
@@ -66,7 +66,7 @@
         <div class="user-menu">
             <div class="flex items-center gap-2">
                 <button class="inline-flex items-center justify-center relative cursor-pointer text-center rounded-full w-10 h-10 overflow-hidden border border-gray-200 bg-green-500 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" aria-label="User menu">
-                    <span>@(ViewData["username"]?.ToString().Substring(0, 1).ToUpper())</span>
+                    <span>@(ViewData["username"]?.ToString()?.Substring(0, 1).ToUpper() ?? "U")</span>
                 </button>
                 <span class="hidden sm:inline text-gray-700 font-medium">
                     @ViewData["username"]
@@ -90,7 +90,7 @@
         <!-- Sidebar -->
         <aside id="sidebar">
             <nav class="p-4">
-                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                @if (User?.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
                 {
                     <!-- Dashboard -->
                     <div class="nav-item active">

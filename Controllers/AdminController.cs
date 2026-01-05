@@ -28,28 +28,9 @@ namespace CourseDx.Controllers
             _roleManager = roleManager;
         }
 
-        // --- UPDATED ACTION METHOD ---
-        // --- هذه هي الدالة التي تم تحديثها ---
         public async Task<IActionResult> AdminHome()
         {
-            // 1. Student Growth Data (Grouped by Month)
-            // -- بيانات نمو الطلاب (مجمعة حسب الشهر)
-            // !! IMPORTANT: Replace 'RegistrationDate' with the actual column name for student creation date.
-            // !! هام: قم باستبدال 'RegistrationDate' بالاسم الحقيقي لعمود تاريخ تسجيل الطالب.
-            //var studentGrowthData = await _context.Students
-            //    .GroupBy(s => new { s.RegistrationDate.Year, s.RegistrationDate.Month })
-            //    .OrderBy(g => g.Key.Year).ThenBy(g => g.Key.Month)
-            //    .Select(g => new ChartDataPoint
-            //    {
-            //        Label = new DateTime(g.Key.Year, g.Key.Month, 1).ToString("MMM yyyy"), // Format: "Jan 2025"
-            //        Value = g.Count()
-            //    })
-            //    .ToListAsync();
-
-            // 2. Course Enrollment Data (Students per Course)
-            // -- بيانات الالتحاق بالكورسات (عدد الطلاب في كل كورس)
-            // !! IMPORTANT: Replace 'Name' with the actual column name for the course title in 'CourseDetals'.
-            // !! هام: قم باستبدال 'Name' بالاسم الحقيقي لعمود اسم الكورس في جدول 'CourseDetals'.
+            // Course Enrollment Data (Students per Course)
             var courseEnrollmentData = await _context.CourseEnrollment
                 .Include(e => e.CourseDetals)
                 .GroupBy(e => e.CourseDetals.Title)
@@ -61,47 +42,12 @@ namespace CourseDx.Controllers
                 .OrderByDescending(x => x.Value) // Show most popular courses first
                 .ToListAsync();
 
-            // 3. Revenue Growth Data (Grouped by Month)
-            // -- بيانات نمو الإيرادات (مجمعة حسب الشهر)
-            // !! IMPORTANT: Replace 'EnrollmentDate' with the actual date column in your 'CourseEnrollment' table.
-            // !! هام: قم باستبدال 'EnrollmentDate' بالاسم الحقيقي لعمود التاريخ في جدول 'CourseEnrollment'.
-            //var revenueGrowthData = await _context.CourseEnrollment
-            //    .Include(e => e.CourseDetals)
-            //    .GroupBy(e => new { e.EnrollmentDate.Year, e.EnrollmentDate.Month })
-            //    .OrderBy(g => g.Key.Year).ThenBy(g => g.Key.Month)
-            //    .Select(g => new ChartDataPoint
-            //    {
-            //        Label = new DateTime(g.Key.Year, g.Key.Month, 1).ToString("MMM yyyy"),
-            //        Value = g.Sum(e => e.CourseDetals.Price)
-            //    })
-            //    .ToListAsync();
-
-            // 4. Instructor Growth Data (Grouped by Month)
-            // -- بيانات نمو المدربين (مجمعة حسب الشهر)
-            // !! IMPORTANT: Replace 'JoinDate' with the actual column name for instructor creation date.
-            // !! هام: قم باستبدال 'JoinDate' بالاسم الحقيقي لعمود تاريخ انضمام المدرب.
-            //var instructorGrowthData = await _context.Instractor
-            //    .GroupBy(i => new { i.JoinDate.Year, i.JoinDate.Month })
-            //    .OrderBy(g => g.Key.Year).ThenBy(g => g.Key.Month)
-            //    .Select(g => new ChartDataPoint
-            //    {
-            //        Label = new DateTime(g.Key.Year, g.Key.Month, 1).ToString("MMM yyyy"),
-            //        Value = g.Count()
-            //    })
-            //    .ToListAsync();
-
-
             // Create the model and pass the data to the view
-            // إنشاء النموذج وتمرير البيانات إلى العرض
             var model = new HomeStatisticsModel
             {
-                // Pass the new chart data
-                //StudentGrowthData = studentGrowthData,
                 CourseEnrollmentData = courseEnrollmentData,
-                //RevenueGrowthData = revenueGrowthData,
-                //InstructorGrowthData = instructorGrowthData,
 
-                // You can still pass the old total counts if needed elsewhere
+                // Total counts
                 EnrollmentsCount = await _context.CourseEnrollment.CountAsync(),
                 InstractorsCount = await _context.Instractor.CountAsync(),
                 StudentsCount = await _context.Students.CountAsync(),
@@ -169,15 +115,15 @@ namespace CourseDx.Controllers
 
         public async Task<IActionResult> Update(string id)
         {
-            AppUser user = await _userManager.FindByIdAsync(id);
+            AppUser? user = await _userManager.FindByIdAsync(id);
             if (user != null)
             {
                 var vm = new CourseDx.Models.Admin.UpdateUserViewModel
                 {
                     Id = user.Id,
-                    ConcurrencyStamp = user.ConcurrencyStamp,
-                    UserName = user.UserName,
-                    Email = user.Email,
+                    ConcurrencyStamp = user.ConcurrencyStamp ?? string.Empty,
+                    UserName = user.UserName ?? string.Empty,
+                    Email = user.Email ?? string.Empty,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     IsAdmin = user.IsAdmin
@@ -190,22 +136,16 @@ namespace CourseDx.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(CourseDx.Models.Admin.UpdateUserViewModel updatedUser)
         {
-            AppUser user = await _userManager.FindByIdAsync(updatedUser.Id);
-            // Defensive: capture current password hash so we don't accidentally overwrite it
-            var originalPasswordHash = user.PasswordHash;
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(updatedUser);
-            //}
-
+            AppUser? user = await _userManager.FindByIdAsync(updatedUser.Id);
+            
             if (user == null)
             {
                 ModelState.AddModelError("", "User Not Found");
                 return View(updatedUser);
             }
 
-
-            // Don't copy ConcurrencyStamp from the client - let Identity/EF manage it.
+            // Defensive: capture current password hash so we don't accidentally overwrite it
+            var originalPasswordHash = user.PasswordHash;
 
             var existingUserWithEmail = await _userManager.FindByEmailAsync(updatedUser.Email);
             if (existingUserWithEmail != null && existingUserWithEmail.Id != user.Id)
@@ -265,7 +205,7 @@ namespace CourseDx.Controllers
         }
         public async Task<IActionResult> Delete(string id)
         {
-            AppUser user = await _userManager.FindByIdAsync(id);
+            AppUser? user = await _userManager.FindByIdAsync(id);
             if (user == null)
             {
                 return RedirectToAction("Index");
@@ -276,7 +216,7 @@ namespace CourseDx.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            AppUser user = await _userManager.FindByIdAsync(id);
+            AppUser? user = await _userManager.FindByIdAsync(id);
             if (user != null)
             {
                 // If user is in Admin role, ensure we are not deleting the last admin

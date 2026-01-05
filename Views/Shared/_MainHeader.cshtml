@@ -1,6 +1,6 @@
 ﻿@{
 
-    ViewData["username"] = @User.Identity.Name;
+    ViewData["username"] = User?.Identity?.Name;
     
     if(ViewData["username"] != null)
     {
@@ -57,13 +57,13 @@
                     <div class="hidden group md:flex items-center relative group z-50">
                         <!-- User Avatar or Name -->
                         <button class="flex items-center space-x-2 text-white focus:outline-none">
-                            <img src="https://cdn.pixabay.com/photo/2024/04/09/03/04/ai-generated-8684869_1280.jpg" alt="@User.Identity.Name" class="w-10 h-10 rounded-full border-2 border-yellow-500">
-                            <span class="text-sm font-medium hidden md:inline text-gray-600 dark:text-white group-hover:text-yellow-400">@User.Identity.Name</span>
+                            <img src="https://cdn.pixabay.com/photo/2024/04/09/03/04/ai-generated-8684869_1280.jpg" alt="@User?.Identity?.Name" class="w-10 h-10 rounded-full border-2 border-yellow-500">
+                            <span class="text-sm font-medium hidden md:inline text-gray-600 dark:text-white group-hover:text-yellow-400">@User?.Identity?.Name</span>
                         </button>
 
                         <!-- Dropdown Menu -->
                         <div class="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            @if (User?.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
                             {
                                 <a href="/Admin/AdminHome" class="text-yellow-400 block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700">Admin</a>
                             }
@@ -79,7 +79,7 @@
                     <!-- Mobile User Icon -->
                     <div class="md:hidden flex items-center">
                         <a href="#">
-                            <img src="https://cdn.pixabay.com/photo/2024/04/09/03/04/ai-generated-8684869_1280.jpg" alt="@User.Identity.Name" class="w-8 h-8 rounded-full border-2 border-yellow-500">
+                            <img src="https://cdn.pixabay.com/photo/2024/04/09/03/04/ai-generated-8684869_1280.jpg" alt="@User?.Identity?.Name" class="w-8 h-8 rounded-full border-2 border-yellow-500">
                         </a>
                     </div>
                 </div>

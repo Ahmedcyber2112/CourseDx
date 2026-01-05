@@ -19,7 +19,7 @@ namespace CourseDx.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Login(string returnUrl = null)
+        public IActionResult Login(string? returnUrl = null)
         {
             var login = new Login();
             return View(login);
@@ -32,7 +32,7 @@ namespace CourseDx.Controllers
         {
             if (ModelState.IsValid)
             {
-                AppUser appUser = await _userManager.FindByNameAsync(login.UserName) ?? await _userManager.FindByEmailAsync(login.UserName);
+                AppUser? appUser = await _userManager.FindByNameAsync(login.UserName) ?? await _userManager.FindByEmailAsync(login.UserName);
 
                 if (appUser != null)
                 {

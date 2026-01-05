@@ -9,10 +9,10 @@ namespace CourseDx.Entity
         public int InstractorId { get; set; }
 
         [ValidateNever]
-        public virtual Course Course { get; set; }
+        public virtual Course Course { get; set; } = null!;
 
         [ValidateNever]
-        public virtual Instractor Instractor { get; set; }
+        public virtual Instractor Instractor { get; set; } = null!;
 
 
     }

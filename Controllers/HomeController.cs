@@ -22,8 +22,8 @@ namespace CourseDx.Controllers
         [Authorize]
         public async Task<IActionResult> Secured()
         {
-            AppUser user = await userManager.GetUserAsync(HttpContext.User);
-            string message = "Hello " + user.UserName;
+            AppUser? user = await userManager.GetUserAsync(HttpContext.User);
+            string message = "Hello " + (user?.UserName ?? "User");
             return View((object)message);
         }
         public IActionResult Index()

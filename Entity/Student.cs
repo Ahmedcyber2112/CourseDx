@@ -9,13 +9,13 @@ namespace CourseDx.Entity
        public int Id { get; set; }
 
         [DisplayName("Student Name")]
-        public string Full_Name { get; set; }
+        public string Full_Name { get; set; } = string.Empty;
 
         [EmailAddress(ErrorMessage = "Invalid email address format")]
         public string Email { get; set; }  = string.Empty;
         [DisplayName("Address")]
         public string adddress { get; set; } = string.Empty;
-        public ICollection<CourseEnrollment> CourseEnrollment { get; set; }
+        public ICollection<CourseEnrollment> CourseEnrollment { get; set; } = new List<CourseEnrollment>();
 
     }
 }

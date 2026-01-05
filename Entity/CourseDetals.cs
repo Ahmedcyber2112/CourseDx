@@ -25,15 +25,15 @@ namespace CourseDx.Entity
 
 
         [ValidateNever]
-        public Instractor Instractor { get; set; } 
+        public Instractor Instractor { get; set; } = null!;
         public int InstractorId { get; set; }
 
         [ValidateNever]
-        public Course Course { get; set; }
+        public Course Course { get; set; } = null!;
         public int CourseId { get; set; }
 
         [ValidateNever]
-        public virtual ICollection<CourseEnrollment> CourseEnrollment { get; set; }
+        public virtual ICollection<CourseEnrollment> CourseEnrollment { get; set; } = new List<CourseEnrollment>();
 
 
 
