@@ -105,7 +105,16 @@
                     string courseImageUrl = Url.Content($"~/img/{baseImageName}.webp");
                     string instructorImageUrl = Url.Content($"~/img/{baseInstructorImageName}.jpg");
 
-                    <div class="flex flex-col justify-between bg-white dark:bg-gray-800 border border-gray-200 dark:border-yellow-500/20 rounded-xl overflow-hidden transition-all duration-300 course-card shadow-lg"
+                    // Random values for demo
+                    var random = new Random(i);
+                    var lessonsCount = random.Next(20, 60);
+                    var hoursCount = random.Next(10, 40);
+                    var studentsCount = random.Next(500, 5000);
+                    string[] levels = { "Beginner", "Intermediate", "Advanced" };
+                    var level = levels[i % 3];
+                    var levelColor = level == "Beginner" ? "bg-green-500" : level == "Intermediate" ? "bg-blue-500" : "bg-purple-500";
+
+                    <div class="flex flex-col justify-between bg-white dark:bg-gray-800 border border-gray-200 dark:border-yellow-500/20 rounded-xl overflow-hidden transition-all duration-300 course-card shadow-lg hover:shadow-2xl hover:shadow-yellow-500/10 group"
                          data-course-name="@course.Name">
                         <a asp-controller="Home" asp-action="Enrollment"
                            asp-route-imgurl="@baseImageName"
@@ -113,7 +122,7 @@
                            asp-route-instructor="@instructorName"
                            asp-route-oldprice="@oldPrice"
                            asp-route-actualprice="@coursePrice">
-                            <div class="relative">
+                            <div class="relative overflow-hidden">
                                 <img srcset="@(Url.Content($"~/img/400w/{baseImageName}-400.webp")) 400w,
                                      @(Url.Content($"~/img/800w/{baseImageName}-800.webp")) 800w,
                                      @(Url.Content($"~/img/1200w/{baseImageName}-1200.webp")) 1200w"
@@ -122,14 +131,30 @@
                                     1200px"
                                      src="@courseImageUrl"
                                      alt="@course.Name"
-                                     class="w-full h-48 object-cover transition-transform duration-300" />
+                                     class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110" />
 
-                                <div class="absolute top-4 right-4 bg-yellow-500 text-gray-900 px-3 py-1 rounded-full text-sm font-bold">
-                                    25% OFF
+                                <!-- Discount Badge -->
+                                <div class="absolute top-4 right-4 bg-gradient-to-r from-red-500 to-red-600 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                                    <i class="fas fa-fire mr-1"></i> 25% OFF
+                                </div>
+                                
+                                <!-- Level Badge -->
+                                <div class="absolute top-4 left-4 @levelColor text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg">
+                                    @level
+                                </div>
+                                
+                                <!-- Overlay on hover -->
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                
+                                <!-- Quick info on hover -->
+                                <div class="absolute bottom-4 left-4 right-4 flex justify-between text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <span class="text-sm"><i class="fas fa-play-circle mr-1"></i> @lessonsCount Lessons</span>
+                                    <span class="text-sm"><i class="fas fa-clock mr-1"></i> @hoursCount Hours</span>
                                 </div>
                             </div>
                         </a>
                         <div class="p-6">
+                            <!-- Course Title & Rating -->
                             <div class="flex justify-between items-start mb-3">
                                 <a asp-controller="Home" asp-action="Enrollment"
                                    asp-route-imgurl="@baseImageName"
@@ -137,18 +162,34 @@
                                    asp-route-instructor="@instructorName"
                                    asp-route-oldprice="@oldPrice"
                                    asp-route-actualprice="@coursePrice"
-                                   class="text-xl font-bold text-gray-900 dark:text-gray-100 hover:text-yellow-600 dark:hover:text-yellow-400 transition-colors duration-300">
+                                   class="text-lg font-bold text-gray-900 dark:text-gray-100 hover:text-yellow-600 dark:hover:text-yellow-400 transition-colors duration-300 line-clamp-2">
                                     @course.Name
                                 </a>
-                                <div class="flex items-center bg-yellow-500/10 px-2 py-1 rounded">
-                                    <i class="fas fa-star text-yellow-600 mr-1"></i>
+                                <div class="flex items-center bg-yellow-100 dark:bg-yellow-500/20 px-2.5 py-1.5 rounded-lg ml-2 flex-shrink-0">
+                                    <i class="fas fa-star text-yellow-500 mr-1 text-sm"></i>
                                     <span class="text-sm font-bold text-yellow-600 dark:text-yellow-500">4.9</span>
                                 </div>
                             </div>
-                            <p class="text-gray-700 dark:text-gray-400 mb-4 line-clamp-2">
+                            
+                            <!-- Course Description -->
+                            <p class="text-gray-600 dark:text-gray-400 mb-4 text-sm line-clamp-2">
                                 @courseDescription
                             </p>
-                            <div class="flex justify-between items-center mb-4">
+                            
+                            <!-- Course Meta Info -->
+                            <div class="flex items-center gap-4 mb-4 text-xs text-gray-500 dark:text-gray-400">
+                                <span class="flex items-center">
+                                    <i class="fas fa-users mr-1 text-yellow-500"></i>
+                                    @studentsCount.ToString("N0") students
+                                </span>
+                                <span class="flex items-center">
+                                    <i class="fas fa-video mr-1 text-yellow-500"></i>
+                                    @lessonsCount lessons
+                                </span>
+                            </div>
+                            
+                            <!-- Instructor -->
+                            <div class="flex justify-between items-center mb-4 pb-4 border-b border-gray-200 dark:border-gray-700">
                                 <div class="flex items-center gap-2">
                                     <a asp-controller="Home" asp-action="Enrollment"
                                        asp-route-imgurl="@courseImageUrl"
@@ -156,16 +197,20 @@
                                        asp-route-instructor="@instructorName"
                                        asp-route-oldprice="@oldPrice"
                                        asp-route-actualprice="@coursePrice"
-                                       class="flex items-center gap-2">
+                                       class="flex items-center gap-2 group/instructor">
                                         <img src="@instructorImageUrl"  
                                              alt="@instructorName"
-                                             class="w-8 h-8 rounded-full" />
-                                        <span class="text-sm cursor-pointer text-gray-700 dark:text-gray-300">@instructorName</span>
+                                             class="w-8 h-8 rounded-full border-2 border-yellow-500/50" />
+                                        <span class="text-sm cursor-pointer text-gray-700 dark:text-gray-300 group-hover/instructor:text-yellow-500 transition-colors">@instructorName</span>
                                     </a>
                                 </div>
 
-                                <span class="text-gray-600 dark:text-gray-400 text-sm">12 Weeks</span>
+                                <span class="text-gray-500 dark:text-gray-400 text-xs flex items-center">
+                                    <i class="fas fa-clock mr-1"></i> @hoursCount Hours
+                                </span>
                             </div>
+                            
+                            <!-- Price & CTA -->
                             <div class="flex justify-between items-center">
                                 <a asp-controller="Home" asp-action="Enrollment"
                                    asp-route-imgurl="@courseImageUrl"
@@ -173,9 +218,9 @@
                                    asp-route-instructor="@instructorName"
                                    asp-route-oldprice="@oldPrice"
                                    asp-route-actualprice="@coursePrice">
-                                    <div>
-                                        <span class="text-lg font-bold text-yellow-400 line-through">$@oldPrice</span>
-                                        <span class="text-xl font-bold text-yellow-600 dark:text-yellow-500 ml-2">$@coursePrice</span>
+                                    <div class="flex items-baseline gap-2">
+                                        <span class="text-sm text-gray-400 line-through">$@oldPrice</span>
+                                        <span class="text-2xl font-bold text-yellow-600 dark:text-yellow-500">$@coursePrice</span>
                                     </div>
                                 </a>
                                 <a class="bg-gradient-to-r cursor-pointer from-yellow-400 to-yellow-600 text-gray-900 px-4 py-2 rounded-lg font-medium hover:opacity-90 transition-opacity"
